@@ -1,9 +1,9 @@
 package kalah.game.board;
 
 import java.lang.ref.SoftReference;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.List;
 
 import kalah.game.exceptions.InvalidHouseException;
 import kalah.game.exceptions.WrongPlayerException;
@@ -21,7 +21,7 @@ public class BoardState
 	}
 
 	private final int[]							board;
-	private final int							size;
+	public	final int							size;
 	private final Player						currentPlayer;
 	private final SoftReference<BoardState>[]	futureStates;
 
@@ -51,6 +51,7 @@ public class BoardState
 	 */
 	public BoardState takeAction(Action a)
 	{
+		//TODO: Don't deposit seeds in opponents store
 		Player p = a.player;
 		if (p != currentPlayer)
 			throw new WrongPlayerException(p);
@@ -88,7 +89,7 @@ public class BoardState
 			int oppositePos = getOppositeHouse(endPos);
 			if (board[oppositePos] != 0) // and the opponents opposite is not empty
 			{
-				newBoard[getStorePos(currentPlayer)] = newBoard[endPos] + newBoard[oppositePos]; // move all the counters to our store
+				newBoard[getStorePos(currentPlayer)] += newBoard[endPos] + newBoard[oppositePos]; // move all the counters to our store
 				newBoard[endPos] = 0;
 				newBoard[oppositePos] = 0;
 			}
@@ -116,7 +117,7 @@ public class BoardState
 
 	private int getOppositeHouse(int position)
 	{
-		return position + (size + 1) % board.length;
+		return (position + size + 1) % board.length;
 	}
 
 	public int getCounters(Player p, int house)
@@ -136,6 +137,15 @@ public class BoardState
 		return currentPlayer;
 	}
 
+	public int getScore(Player p)
+	{
+		int o = getOffset(p);
+		int sum = 0;
+		for(int i = o; i <= o+size; i++)
+			sum += board[i];
+		return sum;
+	}
+
 	/**
 	 * Rotates the board and sets the player to be the opposing player
 	 * 
@@ -153,9 +163,9 @@ public class BoardState
 	/**
 	 * @return a collection representing all the actions that can be taken at this juncture
 	 */
-	public Collection<Action> getValidActions()
+	public List<Action> getValidActions()
 	{
-		HashSet<Action> validActions = new HashSet<Action>();
+		List<Action> validActions = new ArrayList<Action>();
 		for (int i = 0; i < size; i++)
 			if (getCounters(currentPlayer, i) > 0)
 				validActions.add(Action.get(currentPlayer, i));
@@ -190,5 +200,19 @@ public class BoardState
 		if (size != other.size)
 			return false;
 		return true;
+	}
+
+	private String toString(Player p)
+	{
+		String s = p.toString() + "- S:" + getCountersInStore(p) + "	:";
+		for(int i = 0; i < size; i++)
+			s += String.format("%2d ", getCounters(p,i));
+		return s;
+	}
+
+	@Override
+	public String toString()
+	{
+		return String.format("%s%n%s%n%s","Player turn: " + currentPlayer,toString(Player.PLAYER1),toString(Player.PLAYER2));
 	}
 }
