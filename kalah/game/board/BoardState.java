@@ -7,7 +7,7 @@ import java.util.HashSet;
 
 import kalah.game.exceptions.InvalidHouseException;
 import kalah.game.exceptions.WrongPlayerException;
-import kalah.game.program.Configuration;
+import kalah.program.Configuration;
 
 public class BoardState
 {

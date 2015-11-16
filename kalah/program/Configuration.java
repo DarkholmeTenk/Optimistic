@@ -1,4 +1,4 @@
-package kalah.game.program;
+package kalah.program;
 
 public class Configuration
 {
