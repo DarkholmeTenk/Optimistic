@@ -1,5 +1,6 @@
 package kalah.game.board;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -138,5 +139,29 @@ public class BoardState
 			if(getCounters(currentPlayer, i) > 0)
 				validActions.add(Action.get(currentPlayer, i));
 		return validActions;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(board);
+		result = prime * result + (currentPlayer == null ? 0 : currentPlayer.hashCode());
+		result = prime * result + size;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (!(obj instanceof BoardState)) return false;
+		BoardState other = (BoardState) obj;
+		if (!Arrays.equals(board, other.board)) return false;
+		if (currentPlayer != other.currentPlayer) return false;
+		if (size != other.size) return false;
+		return true;
 	}
 }
