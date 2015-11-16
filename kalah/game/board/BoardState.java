@@ -63,13 +63,16 @@ public class BoardState
 		int initialPos = getOffset(p) + a.house;
 		int inHouse = getCounters(a.player, a.house);
 		int[] newBoard = board.clone();
-		int addToAll = inHouse / board.length;
-		int howManyGetOne = inHouse % board.length;
+		int addToAll = inHouse / (board.length - 1);
+		int howManyGetOne = inHouse % (board.length - 1);
+		int enemyStorePos = getStorePos(p.getOpponent());
 		newBoard[initialPos] = 0;
 		for (int i = 1; i <= board.length; i++)
 		{
 			int pos = (initialPos + i) % board.length;
-			if (i <= howManyGetOne)
+			if(pos == enemyStorePos)
+				continue;
+			if (howManyGetOne-- > 0)
 				newBoard[pos] += addToAll + 1;
 			else
 				newBoard[pos] += addToAll;
