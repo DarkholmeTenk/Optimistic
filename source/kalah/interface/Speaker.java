@@ -21,7 +21,7 @@ public class Speaker {
    */
   public void say(AgentMessage message) throws IOException {
     DataOutputStream output = new DataOutputStream(socket.getOutputStream());
-    output.writeBytes(message + '\n');
+    output.writeBytes(message);
   }
 
 }
