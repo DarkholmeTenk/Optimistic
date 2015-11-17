@@ -1,4 +1,4 @@
-package kalah.interface.message.agent;
+package kalah.engine.message.agent;
 
 public class SwapCommandMessage implements AgentMessage {
 

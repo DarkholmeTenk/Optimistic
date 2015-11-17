@@ -1,4 +1,4 @@
-package kalah.interface.message.engine;
+package kalah.engine.message.engine;
 
 /**
  * Creates EngineMessage objects from a string recieved by the game engine
@@ -6,8 +6,8 @@ package kalah.interface.message.engine;
  */
 public class EngineMessageFactory {
 
-  public EngineMessage getMessage(String input) {
-    
+  public static EngineMessage getMessage(String input) {
+    return new GameOverMessage();
   }
 
 }

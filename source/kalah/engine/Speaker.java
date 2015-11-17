@@ -1,6 +1,8 @@
-package kalah.interface;
+package kalah.engine;
 
-import java.io.DataOutputStream;
+import kalah.engine.message.agent.AgentMessage;
+
+import java.io.*;
 import java.net.Socket;
 
 /**
@@ -21,7 +23,7 @@ public class Speaker {
    */
   public void say(AgentMessage message) throws IOException {
     DataOutputStream output = new DataOutputStream(socket.getOutputStream());
-    output.writeBytes(message);
+    output.writeBytes(message.toString());
   }
 
 }

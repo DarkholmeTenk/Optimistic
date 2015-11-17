@@ -1,4 +1,4 @@
-package kalah.interface.message.engine;
+package kalah.engine.message.engine;
 
 /**
  * Represents a start message from the game engine.

@@ -1,3 +1,3 @@
-package kalah.interface.message.engine;
+package kalah.engine.message.engine;
 
 public interface EngineMessage {}
