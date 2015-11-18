@@ -1,9 +1,12 @@
 package kalah.engine.message.agent;
 
-public class SwapCommandMessage implements AgentMessage {
+public class SwapCommandMessage extends AgentMessage
+{
 
-  private String getFragment() {
-    return "SWAP";
-  }
+	@Override
+	protected String getFragment()
+	{
+		return "SWAP";
+	}
 
 }

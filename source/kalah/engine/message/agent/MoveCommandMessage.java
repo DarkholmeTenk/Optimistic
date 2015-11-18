@@ -1,15 +1,21 @@
 package kalah.engine.message.agent;
 
-public class MoveCommandMessage implements AgentMessage {
+import kalah.game.board.Action;
 
-  private final Action action;
+public class MoveCommandMessage extends AgentMessage
+{
 
-  public MoveCommandMessage(Action action) {
-    this.action = action;
-  }
+	private final Action	action;
 
-  private String getFragment() {
-    return "MOVE;" + (action.house + 1);
-  }
+	public MoveCommandMessage(Action action)
+	{
+		this.action = action;
+	}
+
+	@Override
+	protected String getFragment()
+	{
+		return "MOVE;" + (action.house + 1);
+	}
 
 }
