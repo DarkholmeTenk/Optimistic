@@ -3,6 +3,7 @@ package kalah;
 import kalah.engine.*;
 import kalah.engine.message.engine.EngineMessageFactory;
 
+import java.io.IOException;
 import java.net.Socket;
 
 /**
@@ -19,6 +20,12 @@ public class AgentBootstrap {
     Speaker speaker = new Speaker(socket);
     Agent agent = new Agent(speaker);
     Listener listener = new Listener(socket, agent);
+
+    try {
+      listener.listen();
+    } catch (IOException e) {
+      System.err.println(e.getMessage());
+    }
 
   }
 
