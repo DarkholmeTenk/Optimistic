@@ -2,6 +2,14 @@
 
 An implementation of an agent that plays Kalah, for COMP34120.
 
+## Building
+
+```sh
+$ make build
+```
+
+Try `make help` for more options.
+
 ## Code Overview
 
 Read this if you want to quickly get to grips with what's what.
