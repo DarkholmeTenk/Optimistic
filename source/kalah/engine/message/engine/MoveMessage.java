@@ -1,7 +1,5 @@
 package kalah.engine.message.engine;
 
-import kalah.game.board.*;
-
 /**
  * Represents a move message from the game engine.
  *
@@ -12,8 +10,7 @@ public class MoveMessage extends ChangeMessage {
 
   private final int house;
 
-  protected MoveMessage(int move, BoardState state, Player player) {
-    super(state, player);
+  protected MoveMessage(int move) {
     this.house = move - 1;
   }
 

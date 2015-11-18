@@ -12,17 +12,4 @@ import kalah.game.board.*;
  *     <NAT> ::= "0" | "1" | "2" | ... | k
  *     <TURN> ::= "YOU" | "OPP" | "END"
  */
-public abstract class ChangeMessage implements EngineMessage {
-
-  private final Player activePlayer;
-  private final BoardState state;
-
-  protected ChangeMessage(BoardState state, Player activePlayer) {
-    this.state = state;
-    this.activePlayer = activePlayer;
-  }
-
-  public Player getActivePlayer() { return activePlayer; }
-  public BoardState getState() { return state; }
-
-}
+public abstract class ChangeMessage implements EngineMessage {}

@@ -8,10 +8,4 @@ import kalah.game.board.*;
  * Syntax:
  *   "SWAP"
  */
-public class SwapMessage extends ChangeMessage {
-
-  protected SwapMessage(BoardState state, Player player) {
-    super(state, player);
-  }
-
-}
+public class SwapMessage extends ChangeMessage {}

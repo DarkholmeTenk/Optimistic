@@ -29,15 +29,15 @@ public class EngineMessageFactory {
     String changeType = messageBody.substring(0, indexOfFirstSemicolon);
     String changeBody = messageBody.substring(indexOfFirstSemicolon + 1);
 
-    switch(changeType) {
-      case "MOVE": return createMoveMessage(changeBody);
-      case "SWAP": return createSwapMessage(changeBody);
-      default: throw new InvalidChangeTypeException(changeType);
+    if (changeType.equals("SWAP")) {
+      return new SwapMessage();
+    } else {
+      try {
+        return new MoveMessage(Integer.parseInt(changeType));
+      } catch (NumberFormatException e) {
+        throw new InvalidChangeTypeException(changeType);
+      }
     }
-  }
-
-  private static MoveMessage createMoveMessage(String changeBody) {
-    return new MoveMessage(0, new BoardState(7, 7), Player.PLAYER1);
   }
 
   private static StartMessage createStartMessage(String messageBody) {
@@ -48,10 +48,6 @@ public class EngineMessageFactory {
       case "South": return new StartMessage(Position.South);
       default: throw new InvalidPositionException(position);
     }
-  }
-
-  private static SwapMessage createSwapMessage(String changeBody) {
-    return new SwapMessage(new BoardState(7, 7), Player.PLAYER1);
   }
 
 }

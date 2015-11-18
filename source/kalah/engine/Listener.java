@@ -28,7 +28,7 @@ public class Listener {
       new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
     while (true) {
-      owner.hear(EngineMessageFactory.getMessage(input.readLine()));
+      owner.handle(EngineMessageFactory.getMessage(input.readLine()));
     }
   }
 
