@@ -1,2 +1,7 @@
+# Filetypes
 *.class
+
+# Directories
+.gradle/*
+build/*
 classes/*
