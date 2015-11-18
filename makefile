@@ -15,7 +15,7 @@ $(CLASS_DIR):
 # Functions
 .PHONY: help build clean init run
 
-build: $(MAIN).class
+build: clean $(MAIN).class
 
 clean:
 	rm -rf $(CLASS_DIR)

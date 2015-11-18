@@ -1,5 +1,7 @@
 package kalah.engine.message.engine;
 
+import kalah.game.board.Position;
+
 /**
  * Represents a start message from the game engine.
  *
@@ -11,7 +13,7 @@ public class StartMessage implements EngineMessage {
 
   private final Position position;
 
-  private StartMessage(Position position) {
+  protected StartMessage(Position position) {
     this.position = position;
   }
 

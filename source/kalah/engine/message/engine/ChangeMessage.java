@@ -1,6 +1,6 @@
 package kalah.engine.message.engine;
 
-import kalah.game.board.BoardState;
+import kalah.game.board.*;
 
 /**
  * Represents a change message from the game engine.
@@ -12,12 +12,12 @@ import kalah.game.board.BoardState;
  *     <NAT> ::= "0" | "1" | "2" | ... | k
  *     <TURN> ::= "YOU" | "OPP" | "END"
  */
-public class ChangeMessage implements EngineMessage {
+public abstract class ChangeMessage implements EngineMessage {
 
   private final Player activePlayer;
   private final BoardState state;
 
-  private ChangeMessage(BoardState state, Player activePlayer) {
+  protected ChangeMessage(BoardState state, Player activePlayer) {
     this.state = state;
     this.activePlayer = activePlayer;
   }
