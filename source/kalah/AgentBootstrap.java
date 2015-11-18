@@ -18,8 +18,8 @@ public class AgentBootstrap {
     Socket socket = new Socket();
 
     Speaker speaker = new Speaker(socket);
-    Agent agent = new Agent(speaker);
-    Listener listener = new Listener(socket, agent);
+    Controller controller = new Controller(speaker);
+    Listener listener = new Listener(socket, controller);
 
     try {
       listener.listen();

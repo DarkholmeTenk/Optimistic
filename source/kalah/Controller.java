@@ -3,16 +3,16 @@ package kalah;
 import kalah.engine.Speaker;
 import kalah.engine.message.engine.*;
 
-public class Agent {
+public class Controller {
 
   private final Speaker speaker;
 
-  Agent(Speaker speaker) {
+  Controller(Speaker speaker) {
     this.speaker = speaker;
   }
 
-  public void handle(EngineMessage message) {
-
+  public void handle(EngineMessage message)
+  {
     if (message instanceof MoveMessage) {
       handle((MoveMessage) message);
     } else if (message instanceof SwapMessage) {
@@ -22,7 +22,6 @@ public class Agent {
     } else if (message instanceof GameOverMessage) {
       handle((GameOverMessage) message);
     }
-
   }
 
   private void handle(MoveMessage message) {

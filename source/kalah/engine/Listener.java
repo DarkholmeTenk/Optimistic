@@ -1,6 +1,6 @@
 package kalah.engine;
 
-import kalah.Agent;
+import kalah.Controller;
 import kalah.engine.message.engine.EngineMessageFactory;
 
 import java.io.*;
@@ -11,11 +11,11 @@ import java.net.Socket;
  */
 public class Listener {
 
-  private final Agent owner;
+  private final Controller controller;
   private final Socket socket;
 
-  public Listener(Socket socket, Agent owner) {
-    this.owner = owner;
+  public Listener(Socket socket, Controller controller) {
+    this.controller = controller;
     this.socket = socket;
   }
 
@@ -28,7 +28,7 @@ public class Listener {
       new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
     while (true) {
-      owner.handle(EngineMessageFactory.getMessage(input.readLine()));
+      controller.handle(EngineMessageFactory.getMessage(input.readLine()));
     }
   }
 
