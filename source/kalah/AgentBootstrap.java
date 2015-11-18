@@ -17,9 +17,9 @@ public class AgentBootstrap {
     Socket socket = new Socket();
 
     Speaker speaker = new Speaker(socket);
-    Agent agent = new Agent();
+    Agent agent = new Agent(speaker);
     Listener listener = new Listener(socket, agent);
 
   }
-  
+
 }

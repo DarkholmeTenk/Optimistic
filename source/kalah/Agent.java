@@ -1,10 +1,15 @@
 package kalah;
 
+import kalah.engine.Speaker;
 import kalah.engine.message.engine.*;
 
 public class Agent {
 
-  Agent() {}
+  private final Speaker speaker;
+
+  Agent(Speaker speaker) {
+    this.speaker = speaker;
+  }
 
   public void handle(EngineMessage message) {
 
