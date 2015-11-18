@@ -79,20 +79,14 @@ public class ModelTest
 		assertSame("Player 2 did not gain a counter", newState.getCounters(Player.PLAYER2, 0),size + 1);
 	}
 
-	/*	@Test
+	@Test
 	public void captureTest()
 	{
-		BoardState oldState = start;
-		BoardState newState = start;
-		int[] actionList = new int[]{3,3,2,2,3,3,1,2,3,0,2,3,0,1};//Sequence only works on size 4 and 5
-		for(int i : actionList)
-		{
-			oldState = newState;
-			Action a = Action.get(newState.getCurrentPlayerTurn(), i);
-			newState = newState.takeAction(a);
-		}
-		System.out.println(oldState);
-		System.out.println(newState);
-	}*/
+		BoardState oldState = new BoardState(Player.PLAYER1, 4, new int[]{3,1,2,0, 0, 4,3,2,1, 0});
+		BoardState newState = oldState.takeAction(Action.get(Player.PLAYER1, 0));
+		assertSame("P1 House not empty", newState.getCounters(Player.PLAYER1, 3), 0);
+		assertSame("P2 House not empty", newState.getCounters(Player.PLAYER2, 0), 0);
+		assertSame("P1 Score wrong", newState.getCountersInStore(Player.PLAYER1), 5);
+	}
 
 }

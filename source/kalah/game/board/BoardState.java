@@ -25,13 +25,21 @@ public class BoardState
 	private final Player						currentPlayer;
 	private final SoftReference<BoardState>[]	futureStates;
 
+	/**
+	 * Initialize a new Board
+	 * @param _size the number of houses each player has (excluding store)
+	 * @param _counters the number of counters which are in each house to start off with
+	 */
 	public BoardState(int _size, int _counters)
 	{
 		this(Player.PLAYER1, _size, initialBoard(_size, _counters));
 		Action.initActions(_size);
 	}
 
-	private BoardState(Player c, int _size, int[] newState)
+	/**
+	 * This should only be used in tests and this class
+	 */
+	public BoardState(Player c, int _size, int[] newState)
 	{
 		board = newState;
 		size = _size;
@@ -103,26 +111,47 @@ public class BoardState
 		return newState;
 	}
 
+	/**
+	 * @param position
+	 * @return the player who owns position
+	 */
 	private Player getPlayer(int position)
 	{
 		return position <= size + 1 ? Player.PLAYER1 : Player.PLAYER2;
 	}
 
+	/**
+	 * @param p
+	 * @return the position which p's houses start at
+	 */
 	private int getOffset(Player p)
 	{
 		return p.ordinal() * (size + 1);
 	}
 
+	/**
+	 * @param p
+	 * @return the position of p's store
+	 */
 	private int getStorePos(Player p)
 	{
 		return getOffset(p) + size;
 	}
 
+	/**
+	 * @param position
+	 * @return the house directly opposite position
+	 */
 	private int getOppositeHouse(int position)
 	{
-		return (position + size + 1) % board.length;
+		return 2 * size - position;
 	}
 
+	/**
+	 * @param p the player the house belongs to
+	 * @param house the house to check the counters of (houses are left->right from player's view)
+	 * @return the number of counters in the house
+	 */
 	public int getCounters(Player p, int house)
 	{
 		if (house >= size || house < 0)
@@ -130,6 +159,10 @@ public class BoardState
 		return board[getOffset(p) + house];
 	}
 
+	/**
+	 * @param p
+	 * @return
+	 */
 	public int getCountersInStore(Player p)
 	{
 		return board[getStorePos(p)];
@@ -157,10 +190,11 @@ public class BoardState
 	public BoardState switchPlayers()
 	{
 		Player o = currentPlayer.getOpponent();
-		int[] newBoard = new int[board.length];
+		int[] newBoard = board.clone();
+		/*int[] newBoard = new int[board.length];
 		for (int i = 0; i < board.length; i++)
-			newBoard[i] = i <= size ? board[i + size + 1] : board[i - (size + 1)];
-			return new BoardState(o, size, newBoard);
+			newBoard[i] = i <= size ? board[i + size + 1] : board[i - (size + 1)];*/
+		return new BoardState(o, size, newBoard);
 	}
 
 	/**
