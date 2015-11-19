@@ -82,7 +82,7 @@ public class ModelTest
 	@Test
 	public void captureTest()
 	{
-		BoardState oldState = new BoardState(Player.PLAYER1, 4, new int[]{3,1,2,0, 0, 4,3,2,1, 0});
+		BoardState oldState = new BoardState(Player.PLAYER1, 4, new int[]{3,1,2,0, 0, 4,3,2,1, 0}, null);
 		BoardState newState = oldState.takeAction(Action.get(Player.PLAYER1, 0));
 		assertSame("P1 House not empty", newState.getCounters(Player.PLAYER1, 3), 0);
 		assertSame("P2 House not empty", newState.getCounters(Player.PLAYER2, 0), 0);

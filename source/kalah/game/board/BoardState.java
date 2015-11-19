@@ -1,6 +1,7 @@
 package kalah.game.board;
 
 import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +25,7 @@ public class BoardState
 	public	final int							size;
 	private final Player						currentPlayer;
 	private final SoftReference<BoardState>[]	futureStates;
+	private final WeakReference<BoardState>		parent;
 
 	/**
 	 * Initialize a new Board
@@ -32,14 +34,14 @@ public class BoardState
 	 */
 	public BoardState(int _size, int _counters)
 	{
-		this(Player.PLAYER1, _size, initialBoard(_size, _counters));
+		this(Player.PLAYER1, _size, initialBoard(_size, _counters), null);
 		Action.initActions(_size);
 	}
 
 	/**
 	 * This should only be used in tests and this class
 	 */
-	public BoardState(Player c, int _size, int[] newState)
+	public BoardState(Player c, int _size, int[] newState, BoardState _parent)
 	{
 		board = newState;
 		size = _size;
@@ -48,6 +50,10 @@ public class BoardState
 		else
 			futureStates = null;
 		currentPlayer = c;
+		if(_parent == null)
+			parent = null;
+		else
+			parent = new WeakReference<BoardState>(_parent);
 	}
 
 	/**
@@ -105,7 +111,7 @@ public class BoardState
 				newBoard[oppositePos] = 0;
 			}
 		}
-		BoardState newState = new BoardState(next, size, newBoard);
+		BoardState newState = new BoardState(next, size, newBoard, this);
 		if (Configuration.cacheBoardStates && futureStates != null)
 			futureStates[a.house] = new SoftReference<BoardState>(newState);
 		return newState;
@@ -194,7 +200,7 @@ public class BoardState
 		/*int[] newBoard = new int[board.length];
 		for (int i = 0; i < board.length; i++)
 			newBoard[i] = i <= size ? board[i + size + 1] : board[i - (size + 1)];*/
-		return new BoardState(o, size, newBoard);
+		return new BoardState(o, size, newBoard, this);
 	}
 
 	/**
@@ -251,5 +257,25 @@ public class BoardState
 	public String toString()
 	{
 		return String.format("%s%n%s%n%s","Player turn: " + currentPlayer,toString(Player.PLAYER1),toString(Player.PLAYER2));
+	}
+
+	/**
+	 * @return true if the object should have a parent, false otherwise.
+	 */
+	public boolean hasParent()
+	{
+		return parent != null;
+	}
+
+	/**
+	 * Null does not indicate no parent, it may just be that the parent has been garbage collected.
+	 * Use hasParent to check if a parent should exist
+	 * This should only be used if this and its parent are known to be strongly referenced.
+	 * @return parent if it exists, null if not.
+	 */
+	public BoardState getParent()
+	{
+		if(parent == null) return null;
+		return parent.get();
 	}
 }
