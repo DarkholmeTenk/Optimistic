@@ -3,7 +3,7 @@ package kalah.test;
 import kalah.agent.RandomAgent;
 import kalah.game.board.BoardState;
 import kalah.game.board.Player;
-import kalah.program.TwoAgentPlayer;
+import kalah.program.TwoAgentGame;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class RandomAgentTest
 	@Test
 	public void test()
 	{
-		TwoAgentPlayer game = new TwoAgentPlayer(p1, p2);
+		TwoAgentGame game = new TwoAgentGame(p1, p2);
 		int score = game.play(start);
 		System.out.println("Overall score: " + score);
 	}

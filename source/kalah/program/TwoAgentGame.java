@@ -5,13 +5,13 @@ import kalah.game.board.Action;
 import kalah.game.board.BoardState;
 import kalah.game.board.Player;
 
-public class TwoAgentPlayer
+public class TwoAgentGame
 {
 	private final AbstractAgent	agentOne;
 	private final AbstractAgent	agentTwo;
 	private BoardState			state;
 
-	public TwoAgentPlayer(AbstractAgent p1, AbstractAgent p2)
+	public TwoAgentGame(AbstractAgent p1, AbstractAgent p2)
 	{
 		agentOne = p1;
 		agentTwo = p2;
