@@ -9,9 +9,11 @@ import kalah.game.board.Player;
 
 public class RandomAgent extends AbstractAgent
 {
+	public static final RandomAgent playerOne = new RandomAgent(Player.PLAYER1);
+	public static final RandomAgent playerTwo = new RandomAgent(Player.PLAYER2);
 	public static final Random r = new Random();
 
-	public RandomAgent(Player player)
+	private RandomAgent(Player player)
 	{
 		super(player);
 	}
