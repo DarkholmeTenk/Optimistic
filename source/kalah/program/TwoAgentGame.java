@@ -5,6 +5,11 @@ import kalah.game.board.Action;
 import kalah.game.board.BoardState;
 import kalah.game.board.Player;
 
+/**
+ * A class for running 
+ * @author dark
+ *
+ */
 public class TwoAgentGame
 {
 	private final AbstractAgent	agentOne;
@@ -13,8 +18,16 @@ public class TwoAgentGame
 
 	public TwoAgentGame(AbstractAgent p1, AbstractAgent p2)
 	{
-		agentOne = p1;
-		agentTwo = p2;
+		if(p1.agentPlayer == Player.PLAYER1)
+		{
+			agentOne = p1;
+			agentTwo = p2;
+		}
+		else
+		{
+			agentOne = p2;
+			agentTwo = p1;
+		}
 	}
 
 	private AbstractAgent getAgent(Player p)
