@@ -15,11 +15,9 @@ public class AgentBootstrap {
 
     System.out.println("Hello World!");
 
-    Socket socket = new Socket();
-
-    Speaker speaker = new Speaker(socket);
+    Speaker speaker = new Speaker();
     Controller controller = new Controller(speaker);
-    Listener listener = new Listener(socket, controller);
+    Listener listener = new Listener(controller);
 
     try {
       listener.listen();
