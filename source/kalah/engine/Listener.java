@@ -1,6 +1,5 @@
 package kalah.engine;
 
-import kalah.Controller;
 import kalah.engine.message.engine.EngineMessageFactory;
 
 import java.io.*;
@@ -10,23 +9,15 @@ import java.io.*;
  */
 public class Listener
 {
-  private final Controller controller;
   private final BufferedReader input;
 
-  public Listener(Controller controller)
+  public Listener()
   {
-    this.controller = controller;
     this.input = new BufferedReader(new InputStreamReader(System.in));
   }
 
-  /**
-   * Makes the listener listen forever and send messages to its owner.
-   */
-  public void listen() throws IOException
+  public next() throws IOException
   {
-    while (true)
-    {
-      controller.handle(EngineMessageFactory.getMessage(input.readLine()));
-    }
+    return EngineMessageFactory.getMessage(input.readLine());
   }
 }

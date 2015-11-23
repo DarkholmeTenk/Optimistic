@@ -15,15 +15,10 @@ public class AgentBootstrap {
 
     System.out.println("Hello World!");
 
-    Speaker speaker = new Speaker();
-    Controller controller = new Controller(speaker);
-    Listener listener = new Listener(controller);
+    GameDriver driver =
+        new ExternalGameDriver(new RandomAgent(), new Listener());
 
-    try {
-      listener.listen();
-    } catch (IOException e) {
-      System.err.println(e.getMessage());
-    }
+    driver.complete();
 
   }
 
