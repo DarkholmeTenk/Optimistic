@@ -1,7 +1,10 @@
 # Filetypes
 *.class
+*.classpath
+*.project
 
 # Directories
 .gradle/*
 build/*
 classes/*
+/bin/
