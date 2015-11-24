@@ -199,10 +199,10 @@ public class BoardState
 	public BoardState switchPlayers()
 	{
 		Player o = currentPlayer.getOpponent();
-		int[] newBoard = board.clone();
-		/*int[] newBoard = new int[board.length];
+		//int[] newBoard = board.clone();
+		int[] newBoard = new int[board.length];
 		for (int i = 0; i < board.length; i++)
-			newBoard[i] = i <= size ? board[i + size + 1] : board[i - (size + 1)];*/
+			newBoard[i] = board[(i+(board.length / 2)) % board.length];
 		return new BoardState(o, size, newBoard, this);
 	}
 
@@ -215,7 +215,7 @@ public class BoardState
 		for (int i = 0; i < size; i++)
 			if (getCounters(currentPlayer, i) > 0)
 				validActions.add(Action.get(currentPlayer, i));
-		if(turnNumber == 1)
+		if((turnNumber == 1 || turnNumber == 2) && currentPlayer == Player.PLAYER2)
 			validActions.add(Action.swapAction);
 		return validActions;
 	}
