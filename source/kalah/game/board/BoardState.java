@@ -43,7 +43,12 @@ public class BoardState
 	/**
 	 * This should only be used in tests and this class
 	 */
-	public BoardState(Player c, int _size, int[] newState, BoardState _parent)
+	public BoardState(Player c, int size, int[] newState, BoardState parent)
+	{
+		this(c, size, newState, parent, parent != null ? parent.turnNumber + 1 : 0);
+	}
+
+	public BoardState(Player c, int _size, int[] newState, BoardState _parent, int newTurnNum)
 	{
 		board = newState;
 		size = _size;
@@ -56,7 +61,7 @@ public class BoardState
 			parent = null;
 		else
 			parent = new WeakReference<BoardState>(_parent);
-		turnNumber = _parent != null ? _parent.turnNumber + 1 : 0;
+		turnNumber = newTurnNum;
 	}
 
 	public boolean isValidToSwap()
