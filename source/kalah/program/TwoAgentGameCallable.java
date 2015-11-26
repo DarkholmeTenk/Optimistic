@@ -9,16 +9,19 @@ public class TwoAgentGameCallable implements Callable<Double>
 {
 	private final TwoAgentGame game;
 	private BoardState startState;
-	private int	numGames = Configuration.numGames;
+	private long startTime;
+	private int numMillis = Configuration.maxTimePerTurn;
 
 	public TwoAgentGameCallable(AbstractAgent p1, AbstractAgent p2)
 	{
 		game = new TwoAgentGame(p1,p2);
 	}
 
-	public void setNumGames(int num)
+	public void setMaxTime(int time)
 	{
-		numGames = num;
+		if(time < 1)
+			time = 1;
+		numMillis = time;
 	}
 
 	public void setState(BoardState state)
@@ -29,10 +32,18 @@ public class TwoAgentGameCallable implements Callable<Double>
 	@Override
 	public Double call() throws Exception
 	{
+		startTime = System.currentTimeMillis();
+		long endTime = startTime + numMillis;
 		double score = 0;
-		for(int i = 0; i < numGames; i++)
-			score += game.play(startState) / (double) numGames;
-		return score;
+		int n = 0;
+		do
+		{
+			score += game.play(startState);
+			n++;
+		}
+		while(System.currentTimeMillis() < endTime);
+
+		return score / n;
 	}
 
 }
