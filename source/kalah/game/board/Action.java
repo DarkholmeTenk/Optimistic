@@ -76,6 +76,8 @@ public class Action
 	 */
 	public static Action get(Player p, int house)
 	{
-		return actions[p.ordinal()][house];
+		if(house < boardSize)
+			return actions[p.ordinal()][house];
+		return new Action(p, house);
 	}
 }
