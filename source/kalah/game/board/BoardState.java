@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import kalah.game.exceptions.InvalidHouseException;
+import kalah.game.exceptions.InvalidSwapException;
 import kalah.game.exceptions.WrongPlayerException;
 import kalah.program.Configuration;
 
@@ -58,6 +59,11 @@ public class BoardState
 		turnNumber = _parent != null ? _parent.turnNumber + 1 : 0;
 	}
 
+	public boolean isValidToSwap()
+	{
+		return (turnNumber == 1 || turnNumber == 2) && currentPlayer == Player.PLAYER2;
+	}
+
 	/**
 	 * Take an action to get to a new board state
 	 *
@@ -67,8 +73,12 @@ public class BoardState
 	 */
 	public BoardState takeAction(Action a)
 	{
-		if(a instanceof SwapAction && turnNumber == 1)
-			return switchPlayers();
+		if(a instanceof SwapAction)
+		{
+			if(isValidToSwap())
+				return switchPlayers();
+			throw new InvalidSwapException(turnNumber, size);
+		}
 		Player p = a.player;
 		if (p != currentPlayer)
 			throw new WrongPlayerException(p);
@@ -202,7 +212,7 @@ public class BoardState
 		//int[] newBoard = board.clone();
 		int[] newBoard = new int[board.length];
 		for (int i = 0; i < board.length; i++)
-			newBoard[i] = board[(i+(board.length / 2)) % board.length];
+			newBoard[i] = board[(i+board.length / 2) % board.length];
 		return new BoardState(o, size, newBoard, this);
 	}
 
@@ -215,7 +225,7 @@ public class BoardState
 		for (int i = 0; i < size; i++)
 			if (getCounters(currentPlayer, i) > 0)
 				validActions.add(Action.get(currentPlayer, i));
-		if((turnNumber == 1 || turnNumber == 2) && currentPlayer == Player.PLAYER2)
+		if(isValidToSwap())
 			validActions.add(Action.swapAction);
 		return validActions;
 	}
