@@ -31,19 +31,22 @@ public class SimpleMonteCarloAgent extends AbstractAgent
 	 */
 	private double getScore(BoardState state)
 	{
-		for(TwoAgentGameCallable call : callables)
-			call.setState(state);
 		double average = 0;
-		try
+		synchronized(callables)
 		{
-			List<Future<Double>> values = Configuration.executor.invokeAll(callables);
-			int size = values.size();
-			for(Future<Double> val : values)
-				average += val.get() / size;
-		}
-		catch(Exception e)
-		{
-			throw new RuntimeException(e);
+			for(TwoAgentGameCallable call : callables)
+				call.setState(state);
+			try
+			{
+				List<Future<Double>> values = Configuration.executor.invokeAll(callables);
+				int size = values.size();
+				for(Future<Double> val : values)
+					average += val.get() / size;
+			}
+			catch(Exception e)
+			{
+				throw new RuntimeException(e);
+			}
 		}
 		return average;
 	}
@@ -56,7 +59,7 @@ public class SimpleMonteCarloAgent extends AbstractAgent
 	}
 
 	@Override
-	public Action getNextMove(BoardState board)
+	public synchronized Action getNextMove(BoardState board)
 	{
 		if(board.getCurrentPlayerTurn() != agentPlayer) return null;
 		List<Action> moves = board.getValidActions();
