@@ -21,6 +21,7 @@ public class BoardState
 		return tempBoard;
 	}
 
+	private final int							turnNumber;
 	private final int[]							board;
 	public	final int							size;
 	private final Player						currentPlayer;
@@ -54,18 +55,20 @@ public class BoardState
 			parent = null;
 		else
 			parent = new WeakReference<BoardState>(_parent);
+		turnNumber = _parent != null ? _parent.turnNumber + 1 : 0;
 	}
 
 	/**
 	 * Take an action to get to a new board state
-	 * 
+	 *
 	 * @param a
 	 *            the action to take
 	 * @return a new board state representative of the new state of the game
 	 */
 	public BoardState takeAction(Action a)
 	{
-		//TODO: Don't deposit seeds in opponents store
+		if(a instanceof SwapAction && turnNumber == 1)
+			return switchPlayers();
 		Player p = a.player;
 		if (p != currentPlayer)
 			throw new WrongPlayerException(p);
@@ -190,16 +193,16 @@ public class BoardState
 
 	/**
 	 * Rotates the board and sets the player to be the opposing player
-	 * 
+	 *
 	 * @return a board state representing that change
 	 */
 	public BoardState switchPlayers()
 	{
 		Player o = currentPlayer.getOpponent();
-		int[] newBoard = board.clone();
-		/*int[] newBoard = new int[board.length];
+		//int[] newBoard = board.clone();
+		int[] newBoard = new int[board.length];
 		for (int i = 0; i < board.length; i++)
-			newBoard[i] = i <= size ? board[i + size + 1] : board[i - (size + 1)];*/
+			newBoard[i] = board[(i+(board.length / 2)) % board.length];
 		return new BoardState(o, size, newBoard, this);
 	}
 
@@ -212,6 +215,8 @@ public class BoardState
 		for (int i = 0; i < size; i++)
 			if (getCounters(currentPlayer, i) > 0)
 				validActions.add(Action.get(currentPlayer, i));
+		if((turnNumber == 1 || turnNumber == 2) && currentPlayer == Player.PLAYER2)
+			validActions.add(Action.swapAction);
 		return validActions;
 	}
 

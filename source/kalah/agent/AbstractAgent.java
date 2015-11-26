@@ -12,6 +12,11 @@ import kalah.game.board.Player;
 public abstract class AbstractAgent
 {
 	public final Player agentPlayer;
+
+	/**
+	 * Generate the agent for the player specified
+	 * @param player the player who this agent represents
+	 */
 	public AbstractAgent(Player player)
 	{
 		agentPlayer = player;

@@ -3,27 +3,26 @@ package kalah.engine;
 import kalah.engine.message.agent.AgentMessage;
 
 import java.io.*;
-import java.net.Socket;
 
 /**
- * Sends messages to a given socket.
+ * Sends messages to stdout.
  */
-public class Speaker {
+public class Speaker
+{
+  private final DataOutputStream output;
 
-  private final Socket socket;
-
-  public Speaker(Socket socket) {
-    this.socket = socket;
+  public Speaker()
+  {
+    this.output = new DataOutputStream(System.out);
   }
 
   /**
-   * Makes speaker say something to its socket
+   * Makes speaker say something on its output
    *
    * @param message The AgentMessage to send to the game engine
    */
-  public void say(AgentMessage message) throws IOException {
-    DataOutputStream output = new DataOutputStream(socket.getOutputStream());
+  public void say(AgentMessage message) throws IOException
+  {
     output.writeBytes(message.toString());
   }
-
 }

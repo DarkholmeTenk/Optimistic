@@ -24,6 +24,11 @@ public class SimpleMonteCarloAgent extends AbstractAgent
 			callables.add(new TwoAgentGameCallable(RandomAgent.playerOne, RandomAgent.playerTwo));
 	}
 
+	/**
+	 * runs a bunch of simulations to evaluate the score of a given board state
+	 * @param state
+	 * @return
+	 */
 	private double getScore(BoardState state)
 	{
 		double average = 0;
