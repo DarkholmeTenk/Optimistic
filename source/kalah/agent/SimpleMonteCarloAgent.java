@@ -29,13 +29,16 @@ public class SimpleMonteCarloAgent extends AbstractAgent
 	 * @param state
 	 * @return
 	 */
-	private double getScore(BoardState state)
+	private double getScore(BoardState state, int time)
 	{
 		double average = 0;
 		synchronized(callables)
 		{
 			for(TwoAgentGameCallable call : callables)
+			{
 				call.setState(state);
+				call.setMaxTime(time);
+			}
 			try
 			{
 				List<Future<Double>> values = Configuration.executor.invokeAll(callables);
@@ -67,10 +70,11 @@ public class SimpleMonteCarloAgent extends AbstractAgent
 		if(moves.size() == 1) return moves.get(0);
 		double bestScore = agentPlayer == Player.PLAYER1 ? Integer.MIN_VALUE : Integer.MAX_VALUE;
 		Action a = null;
+		int time = Configuration.maxTimePerTurn / moves.size();
 		for(Action act : moves)
 		{
 			BoardState newState = board.takeAction(act);
-			double score = getScore(newState);
+			double score = getScore(newState,time);
 			if(isBetter(score, bestScore))
 			{
 				a = act;
