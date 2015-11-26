@@ -201,8 +201,9 @@ public class BoardState
 	{
 		int o = getOffset(p);
 		int sum = 0;
-		for(int i = o; i <= o+size; i++)
-			sum += board[i];
+		for(int i = 0; i < size; i++)
+			sum += getCounters(p, i);
+		sum += getCountersInStore(p);
 		return sum;
 	}
 
