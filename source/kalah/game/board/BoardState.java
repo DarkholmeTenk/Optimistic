@@ -66,7 +66,7 @@ public class BoardState
 
 	public boolean isValidToSwap()
 	{
-		return (turnNumber == 1 || turnNumber == 2) && currentPlayer == Player.PLAYER2;
+		return Configuration.allowSwap && (turnNumber == 1 || turnNumber == 2) && currentPlayer == Player.PLAYER2;
 	}
 
 	/**
