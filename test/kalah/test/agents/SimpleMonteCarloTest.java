@@ -28,4 +28,14 @@ public class SimpleMonteCarloTest extends AgentTest
 		System.out.println("Overall score: " + score);
 	}
 
+	@Test
+	public void endGameTest()
+	{
+		Configuration.maxTimePerTurn = 4;
+		BoardState bs = new BoardState(Player.PLAYER1, 4, new int[]{1,0,0,3, 0, 0,0,0,1, 0}, null, 4);
+		Action a = SimpleMonteCarloAgent.playerOne.getNextMove(bs);
+		assertTrue("No action picked", a != null);
+		assertTrue("Wrong action picked " + a.house, a.house != 3);
+	}
+
 }
