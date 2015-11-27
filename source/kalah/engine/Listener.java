@@ -1,6 +1,6 @@
 package kalah.engine;
 
-import kalah.engine.message.engine.EngineMessageFactory;
+import kalah.engine.message.engine.*;
 
 import java.io.*;
 
@@ -16,7 +16,7 @@ public class Listener
     this.input = new BufferedReader(new InputStreamReader(System.in));
   }
 
-  public next() throws IOException
+  public EngineMessage next() throws IOException
   {
     return EngineMessageFactory.getMessage(input.readLine());
   }

@@ -1,47 +1,36 @@
 package kalah.agent;
 
+import kalah.engine.Listener;
+import kalah.engine.message.engine.*;
+import kalah.game.board.*;
+import kalah.agent.exceptions.*;
+
 public class ExternalAgent extends AbstractAgent
 {
-  private final Listener Listener;
+  private final Listener listener;
 
   public ExternalAgent(Listener listener)
   {
     this.listener = listener;
   }
 
-  /**
-   * Gets this agent's next move given the last move that was made.
-   *
-   * @param lastMove The last move made in the game the agent is playing.
-   * @return This agent's move.
-   */
-  public Action decideNextAction()
+  @Override
+  public Action takeNextAction()
   {
-    Message message = listener.next();
+    EngineMessage message = listener.next();
 
     if(message instanceof MoveMessage)
-      return new MoveAction((MoveMessage message).getHouse());
+      return new Action(((MoveMessage) message).getHouse());
     else if (message instanceof SwapMessage)
       return new SwapAction();
     else
-      throw new IllegalMessageException("Expected a change message.");
+      throw new CannotActException("Expected a change message.");
   }
 
-  /**
-   * Called when an opponent makes a move so that the agent can update its
-   * state.
-   */
-  public void informOfAction(Action action)
-  {
+  @Override
+  public void opponentAction(BoardState state, Action action) {}
 
-  }
+  @Override
+  public Action getNextMove(BoardState board) { return null; }
 
-  /**
-   * Called to inform the agent of the initial board state (useful for starting
-   * a game part way through).
-   */
-  public void informOfState(BoardState board)
-  {
-    
-  }
 }

@@ -1,7 +1,7 @@
 package kalah;
 
 import kalah.engine.*;
-import kalah.engine.message.engine.EngineMessageFactory;
+import kalah.agent.RandomAgent;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -15,8 +15,10 @@ public class AgentBootstrap {
 
     System.out.println("Hello World!");
 
-    GameDriver driver =
-        new ExternalGameDriver(new RandomAgent(), new Listener());
+    GameDriver driver = new ExternalGameDriver(
+        new RandomAgent(),
+        new Listener(),
+        new Speaker());
 
     driver.complete();
 

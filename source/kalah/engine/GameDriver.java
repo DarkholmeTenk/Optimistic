@@ -1,10 +1,13 @@
 package kalah.engine;
 
+import kalah.agent.AbstractAgent;
+import kalah.game.board.*;
+
 public abstract class GameDriver
 {
   protected final AbstractAgent playerOne;
   protected final AbstractAgent playerTwo;
-  private BoardState board;
+  protected BoardState board;
 
   protected GameDriver(
       AbstractAgent playerOne, AbstractAgent playerTwo, BoardState board)
@@ -13,13 +16,13 @@ public abstract class GameDriver
     this.playerTwo = playerTwo;
     this.board = board;
 
-    playerOne.informOfState(game.getBoardState());
-    playerTwo.informOfState(game.getBoardState());
+    playerOne.informOfState(board);
+    playerTwo.informOfState(board);
   }
 
   private AbstractAgent getAgent(Player player)
   {
-    if (player == Player.Player1)
+    if (player == Player.PLAYER1)
       return playerOne;
     else
       return playerTwo;
@@ -32,13 +35,13 @@ public abstract class GameDriver
    */
   public boolean step()
   {
-    Player active = game.getActivePlayer();
+    Player active = board.getCurrentPlayerTurn();
     Player inactive = active.getOpponent();
-    Acion action = getAgent(active).decideNextAction();
+    Action action = getAgent(active).takeNextAction();
 
     if (action != null)
     {
-      game.apply(action);
+      board.takeAction(action);
       getAgent(inactive).informOfAction(action);
       return true;
     }
