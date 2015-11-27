@@ -13,6 +13,7 @@ public class TwoAgentGameCallableTest
 {
 	private static BoardState state;
 	private static TwoAgentGameCallable callable;
+	private static final int numTests = 50;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception
@@ -28,10 +29,14 @@ public class TwoAgentGameCallableTest
 	{
 		int ttt = 10;
 		callable.setMaxTime(ttt);
-		long t = System.currentTimeMillis();
-		callable.call();
-		long et = System.currentTimeMillis();
-		assertTrue("Took too long - " + (et - t) , System.currentTimeMillis() < t+ttt+2);
+		for(int i = 0; i < numTests; i++)
+		{
+			long t = System.nanoTime();
+			callable.call();
+			long et = System.nanoTime();
+			long expectedTime = t + (ttt + 2) * 1000000;
+			assertTrue("Took too long - " + (et - t)/1000000 + "ms with " + callable.getNumGamesPlayed() +" - " + i, et < expectedTime);
+		}
 	}
 
 }

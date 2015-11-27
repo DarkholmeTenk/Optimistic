@@ -3,6 +3,7 @@ package kalah.agent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import kalah.game.board.Action;
 import kalah.game.board.BoardState;
@@ -41,10 +42,15 @@ public class SimpleMonteCarloAgent extends AbstractAgent
 			}
 			try
 			{
-				List<Future<Double>> values = Configuration.executor.invokeAll(callables);
-				int size = values.size();
+				List<Future<Double>> values = Configuration.executor.invokeAll(callables, time, TimeUnit.MILLISECONDS);
+				int size = 0;
 				for(Future<Double> val : values)
-					average += val.get() / size;
+					if(!val.isCancelled())
+					{
+						average += val.get();
+						size++;
+					}
+				average /= size;
 			}
 			catch(Exception e)
 			{
