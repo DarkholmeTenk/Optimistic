@@ -4,14 +4,14 @@ public abstract class GameDriver
 {
   protected final AbstractAgent playerOne;
   protected final AbstractAgent playerTwo;
-  private final Game game;
+  private BoardState board;
 
   protected GameDriver(
-      AbstractAgent playerOne, AbstractAgent playerTwo, Game game)
+      AbstractAgent playerOne, AbstractAgent playerTwo, BoardState board)
   {
     this.playerOne = playerOne;
     this.playerTwo = playerTwo;
-    this.game = game;
+    this.board = board;
 
     playerOne.informOfState(game.getBoardState());
     playerTwo.informOfState(game.getBoardState());
@@ -54,5 +54,5 @@ public abstract class GameDriver
     while(step());
   }
 
-  public Game getGame() { return game; }
+  public BoardState getGameState() { return board; }
 }

@@ -17,15 +17,15 @@ public class ExternalGameDriver extends GameDriver
     this.listener = listener;
   }
 
-  private Game initGame()
+  private BoardState initGameState()
   {
     Message message = listener.next();
 
     if(message instanceof StartMessage)
       if((StartMessage message).getPosition() == Position.North)
-        return new Game(7, 7, playerOne, playerTwo);
+        return new BoardState(7, 7, playerOne, playerTwo);
       else
-        return new Game(7, 7, playerTwo, playerOne);
+        return new BoardState(7, 7, playerTwo, playerOne);
     else if (message instanceof GameOverMessage)
       throw new UnexpectedGameOverException();
     else
