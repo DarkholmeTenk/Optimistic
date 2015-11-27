@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import kalah.game.exceptions.InvalidHouseException;
-import kalah.game.exceptions.InvalidSwapException;
-import kalah.game.exceptions.WrongPlayerException;
+import kalah.exceptions.InvalidHouseException;
+import kalah.exceptions.InvalidSwapException;
+import kalah.exceptions.WrongPlayerException;
 import kalah.program.Configuration;
 
 public class BoardState

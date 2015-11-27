@@ -1,4 +1,4 @@
-package kalah.game.exceptions;
+package kalah.exceptions;
 
 public class InvalidSwapException extends InvalidHouseException
 {
