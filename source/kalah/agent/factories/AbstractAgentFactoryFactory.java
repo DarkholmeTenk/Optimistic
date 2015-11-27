@@ -41,6 +41,7 @@ public class AbstractAgentFactoryFactory
 	 * Use this method to get an agent factory for the string given
 	 * @param id the id of the agent type to return a factory for
 	 * @return a factory to construct agents of type
+	 * throws NoSuchAgentException if it doesn't exist
 	 */
 	public static AbstractAgentFactory get(String id)
 	{
@@ -49,6 +50,12 @@ public class AbstractAgentFactoryFactory
 		return map.get(id);
 	}
 
+	/**
+	 * This method will probably never be used, but can return an agent factory for an agent class.
+	 * @param agentClass the class of agent to return a factory for
+	 * @return an agent factory
+	 * throws NoSuchAgentException if it doesn't exist
+	 */
 	public static AbstractAgentFactory get(Class<? extends AbstractAgent> agentClass)
 	{
 		if(!secondMap.containsKey(agentClass))
