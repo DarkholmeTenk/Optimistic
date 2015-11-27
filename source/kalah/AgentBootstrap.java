@@ -17,8 +17,8 @@ public class AgentBootstrap {
 
     GameDriver driver = new ExternalGameDriver(
         new RandomAgent(),
-        new Listener(),
-        new Speaker());
+        new Listener(System.in),
+        new Speaker(System.out));
 
     driver.complete();
 

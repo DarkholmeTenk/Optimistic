@@ -11,9 +11,9 @@ public class Listener
 {
   private final BufferedReader input;
 
-  public Listener()
+  public Listener(InputStream stream)
   {
-    this.input = new BufferedReader(new InputStreamReader(System.in));
+    this.input = new BufferedReader(new InputStreamReader(stream));
   }
 
   public EngineMessage next() throws IOException
