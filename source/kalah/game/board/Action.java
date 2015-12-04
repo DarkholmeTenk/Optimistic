@@ -13,7 +13,7 @@ public class Action
 
 	public final static Action swapAction = new SwapAction();
 
-	protected Action(Player p, int h)
+	public Action(Player p, int h)
 	{
 		player = p;
 		house = h;

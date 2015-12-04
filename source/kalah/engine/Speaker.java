@@ -11,9 +11,9 @@ public class Speaker
 {
   private final DataOutputStream output;
 
-  public Speaker()
+  public Speaker(PrintStream stream)
   {
-    this.output = new DataOutputStream(System.out);
+    this.output = new DataOutputStream(stream);
   }
 
   /**
