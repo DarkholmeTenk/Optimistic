@@ -17,7 +17,10 @@ public class ExternalAgent extends AbstractAgent
   }
 
   @Override
-  public Action takeNextAction()
+  public void opponentAction(BoardState state, Action action) {}
+
+  @Override
+  public Action getNextMove(BoardState board)
   {
     try
     {
@@ -35,11 +38,5 @@ public class ExternalAgent extends AbstractAgent
       return null;
     }
   }
-
-  @Override
-  public void opponentAction(BoardState state, Action action) {}
-
-  @Override
-  public Action getNextMove(BoardState board) { return null; }
 
 }

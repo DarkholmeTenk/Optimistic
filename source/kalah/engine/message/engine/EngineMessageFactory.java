@@ -41,7 +41,7 @@ public class EngineMessageFactory {
   }
 
   private static StartMessage createStartMessage(String messageBody) {
-    String position = messageBody.substring(0, messageBody.indexOf('\n'));
+    String position = messageBody;
 
     switch (position) {
       case "North": return new StartMessage(Position.North);

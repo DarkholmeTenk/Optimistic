@@ -27,7 +27,6 @@ public class ExternalGameDriver extends GameDriver
 
     this.speaker = speaker;
     this.listener = listener;
-    this.board = null;
   }
 
   private static Player getInternalPlayer(Listener listener) throws IOException
