@@ -3,10 +3,12 @@ package kalah.engine;
 import kalah.engine.Listener;
 import kalah.engine.Speaker;
 import kalah.engine.message.engine.*;
-import kalah.agent.AbstractAgent;
 import kalah.agent.ExternalAgent;
+import kalah.agent.factories.*;
 import kalah.game.board.*;
 import kalah.engine.exceptions.*;
+
+import java.io.IOException;
 
 public class ExternalGameDriver extends GameDriver
 {
@@ -14,24 +16,29 @@ public class ExternalGameDriver extends GameDriver
   private final Listener listener;
 
   public ExternalGameDriver(
-      AbstractAgent agent, Listener listener, Speaker speaker)
+      AbstractAgentFactory agentFactory, Listener listener, Speaker speaker)
+    throws IOException
   {
-    super(agent, new ExternalAgent(listener), null);
+    super(
+        agentFactory,
+        new ExternalAgentFactory(listener),
+        getInternalPlayer(listener),
+        new BoardState(7, 7));
 
     this.speaker = speaker;
     this.listener = listener;
-    this.board = initGameState();
+    this.board = null;
   }
 
-  private BoardState initGameState()
+  private static Player getInternalPlayer(Listener listener) throws IOException
   {
     EngineMessage message = listener.next();
 
     if(message instanceof StartMessage)
       if(((StartMessage) message).getPosition() == Position.North)
-        return new BoardState(7, 7, playerOne, playerTwo);
+        return Player.PLAYER1;
       else
-        return new BoardState(7, 7, playerTwo, playerOne);
+        return Player.PLAYER2;
     else if (message instanceof GameOverMessage)
       throw new UnexpectedMessageTypeException(message, StartMessage.class);
     else

@@ -1,6 +1,7 @@
 package kalah.engine;
 
 import kalah.agent.AbstractAgent;
+import kalah.agent.factories.*;
 import kalah.game.board.*;
 
 public abstract class GameDriver
@@ -10,10 +11,22 @@ public abstract class GameDriver
   protected BoardState board;
 
   protected GameDriver(
-      AbstractAgent playerOne, AbstractAgent playerTwo, BoardState board)
+      AbstractAgentFactory factoryOne,
+      AbstractAgentFactory factoryTwo,
+      Player factoryOneIs,
+      BoardState board)
   {
-    this.playerOne = playerOne;
-    this.playerTwo = playerTwo;
+    if (factoryOneIs == Player.PLAYER1)
+    {
+      this.playerOne = factoryOne.getAgent(Player.PLAYER1);
+      this.playerTwo = factoryTwo.getAgent(Player.PLAYER2);
+    }
+    else
+    {
+      this.playerTwo = factoryTwo.getAgent(Player.PLAYER1);
+      this.playerOne = factoryOne.getAgent(Player.PLAYER2);
+    }
+
     this.board = board;
 
     playerOne.informOfState(board);

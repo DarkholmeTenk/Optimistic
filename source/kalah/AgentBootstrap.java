@@ -1,7 +1,7 @@
 package kalah;
 
 import kalah.engine.*;
-import kalah.agent.RandomAgent;
+import kalah.agent.factories.*;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -13,14 +13,25 @@ public class AgentBootstrap {
 
   public static void main(String[] args) {
 
-    System.out.println("Hello World!");
+    AbstractAgentFactory factoryOne = new RandomAgentFactory();
+    AbstractAgentFactory factoryTwo = new RandomAgentFactory();
 
-    GameDriver driver = new ExternalGameDriver(
-        new RandomAgent(),
-        new Listener(System.in),
-        new Speaker(System.out));
+    // TODO: Some logic to get the agent type from the args
 
-    driver.complete();
+    try
+    {
+      GameDriver driver = new ExternalGameDriver(
+          new RandomAgentFactory(),
+          new Listener(System.in),
+          new Speaker(System.out));
+
+      driver.complete();
+    }
+    catch (IOException e)
+    {
+      System.err.println("Something went wrong with the IO");
+      System.err.println(e.getMessage());
+    }
 
   }
 
