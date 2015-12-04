@@ -1,4 +1,4 @@
-package kalah.game.exceptions;
+package kalah.exceptions;
 
 import kalah.game.board.Player;
 
