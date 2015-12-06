@@ -1,11 +1,19 @@
 package kalah.game.board;
 
+/**
+ * A class representing an action that is to be taken.
+ * May be of class {@link SwapAction} which represents switching the board via the Pie Rule.
+ * @author DarkholmeTenk
+ *
+ */
 public class Action
 {
 	public final Player	player;
 	public final int	house;
 
-	private Action(Player p, int h)
+	public final static Action swapAction = new SwapAction();
+
+	protected Action(Player p, int h)
 	{
 		player = p;
 		house = h;
@@ -41,7 +49,7 @@ public class Action
 
 	/**
 	 * Called by the board to initialise the action cache
-	 * 
+	 *
 	 * @param _boardSize
 	 */
 	protected static void initActions(int _boardSize)
@@ -59,7 +67,7 @@ public class Action
 
 	/**
 	 * Get an action
-	 * 
+	 *
 	 * @param p
 	 *            the player who is taking the action
 	 * @param house
