@@ -1,0 +1,74 @@
+package kalah.test;
+
+import static org.junit.Assert.*;
+
+import kalah.engine.message.engine.exceptions.*;
+import kalah.engine.message.engine.EngineMessageFactory;
+import kalah.game.board.*;
+
+import kalah.game.board.Position;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+/**
+*  set of tests to make sure the GIU ( listerner and speaker) are accepting the correct
+*  values and returning the right messages when being called. assunming a Listener is 
+*  the one supplying the messages correctly
+*  START
+*  CHANGE
+*  END
+*/
+
+public class MessageFactoryTest{
+    
+  @Test
+  public static void StartTestNorth(){
+	  // START; North|South \n
+	  StartMessage test;
+	  test = EnigneMessageFactory.getMessage("START;North\n");
+	  // test that position is North
+	  assertEquals(test.getPosition(),Position.North);
+  }
+  @Test
+  public static void StartTestSouth(){
+	  // START; North|South \n
+	  StartMessage test;
+	  test = EnigneMessageFactory.getMessage("START;South\n");
+	  // test that position is South
+	  assertEquals(test.getPosition(),Position.South);
+  }
+  @Test(expected = InvalidPositionException.class)
+  public static void StartTestException(){
+	  // START; North|South \n
+	  StartMessage test;
+	  // test that Messages is invalid and throws exception
+		  test = EnigneMessageFactory.getMessage("START;north\n");
+  }
+  
+  @Test
+  public static void EndTest(){
+	  // END\n
+	  // test that a game overmessage has been recieved
+	  asserEquals(EnigneMessageFactory.getMessage("END\n"), new GameOverMessage());
+  }
+  @Test(expected = InvalidMessageNameException.class)
+  public static void EndTestException(){
+	  // END\n
+	  // test that a exception is thorm from invalid Message EN
+	  asserEquals(EnigneMessageFactory.getMessage("EN\n"), new GameOverMessage());
+  }
+  
+  @Test
+  public static void ChangeTestSwap(){
+	 asserEquals(EnigneMessageFactory.getMessage("CHNGE;SWAP;\n"), new SwapMessage());
+  }
+  @Test
+  public static void ChangeTestMove(){
+	 asserEquals(EnigneMessageFactory.getMessage("CHNGE;MOVE;\n"), new MoveMessage());
+  }
+  @Test(expected = InvalidChangeTypeException.class)
+  public static void ChangeTestMove(){
+	 EnigneMessageFactory.getMessage("CHNGE;MOE;\n");
+  }
+}
