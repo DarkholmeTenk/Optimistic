@@ -26,6 +26,7 @@ public class BoardState implements Serializable
 	private final int									turnNumber;
 	private final int[]									board;
 	public final int									size;
+	public final int									numC;
 	private final Player								currentPlayer;
 	private transient final SoftReference<BoardState>[]	futureStates;
 	private transient final WeakReference<BoardState>	parent;
@@ -51,6 +52,10 @@ public class BoardState implements Serializable
 	{
 		board = newState;
 		size = _size;
+		int sum = 0;
+		for(int i : newState)
+			sum += i;
+		numC = sum;
 		if (Configuration.cacheBoardStates)
 			futureStates = new SoftReference[size];
 		else
