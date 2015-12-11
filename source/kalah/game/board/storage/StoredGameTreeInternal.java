@@ -9,15 +9,26 @@ import kalah.game.board.BoardState;
 
 public class StoredGameTreeInternal<D extends Serializable> implements Serializable
 {
+	private static final long	serialVersionUID	= 876870731121208780L;
+
 	public final BoardState currentState;
 	public StoredGameTreeInternal<D>[] branches;
 	public D data;
+	public final int depth;
 
 	private transient List<Action> acts;
+	protected boolean inited = false;
+	protected StoredGameTreeInternal<D> parent;
+	protected StoredGameTree<D> owned;
 
-	public StoredGameTreeInternal(BoardState cState)
+	public StoredGameTreeInternal(BoardState cState, StoredGameTreeInternal<D> pt, StoredGameTree<D> ow)
 	{
+		parent = pt;
+		owned = ow;
+		owned.intMap.put(cState, this);
 		currentState = cState;
+		depth = pt == null ? 0 : pt.depth + 1;
+		inited = true;
 		initActions();
 	}
 
@@ -44,7 +55,7 @@ public class StoredGameTreeInternal<D extends Serializable> implements Serializa
 	{
 		int i = getActNumber(a);
 		if(branches[i] == null)
-			branches[i] = new StoredGameTreeInternal<D>(currentState.takeAction(a));
+			branches[i] = new StoredGameTreeInternal<D>(currentState.takeAction(a), this, owned);
 		return branches[i];
 	}
 

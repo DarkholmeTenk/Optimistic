@@ -1,18 +1,27 @@
 package kalah.game.board.storage;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 import kalah.game.board.BoardState;
 
 public class StoredGameTree<D extends Serializable> implements Serializable
 {
+	private static final long	serialVersionUID	= 8855443499265788007L;
 	public final BoardState startingBoardState;
 	public final StoredGameTreeInternal<D> internalTree;
+	protected HashMap<BoardState,StoredGameTreeInternal<D>> intMap;
 
 	public StoredGameTree(BoardState startState)
 	{
 		startingBoardState = startState;
-		internalTree = new StoredGameTreeInternal<D>(startState);
+		intMap = new HashMap<BoardState,StoredGameTreeInternal<D>>();
+		internalTree = new StoredGameTreeInternal<D>(startState,null,this);
+	}
+
+	public StoredGameTreeInternal getInternalTree(BoardState state)
+	{
+		return intMap.get(state);
 	}
 
 	@Override
