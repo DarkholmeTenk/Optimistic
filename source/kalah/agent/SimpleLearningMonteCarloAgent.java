@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 import kalah.game.board.Action;
 import kalah.game.board.BoardState;
 import kalah.game.board.Player;
@@ -24,7 +25,7 @@ public class SimpleLearningMonteCarloAgent extends SimpleMonteCarloAgent
 
 	private List<TwoAgentGameCallable> callables = new ArrayList<TwoAgentGameCallable>();
 
-	private StoredGameTree<Pair<Double,Integer>> dataTree;
+	private StoredGameTree<Pair<Double,Double>> dataTree;
 	private SimpleLearningMonteCarloAgent(Player player)
 	{
 		super(player);
@@ -32,10 +33,22 @@ public class SimpleLearningMonteCarloAgent extends SimpleMonteCarloAgent
 			callables.add(new TwoAgentGameCallable(RandomAgent.playerOne, RandomAgent.playerTwo));
 	}
 
-	private StoredGameTreeInternal<Pair<Double,Integer>> getIntTree(BoardState state)
+	private StoredGameTreeInternal<Pair<Double,Double>> getIntTree(BoardState state)
 	{
 		if(dataTree == null) return null;
 		return dataTree.getInternalTree(state);
+	}
+
+	private void addScore(StoredGameTreeInternal<Pair<Double,Double>> intTree, double score, double toAdd)
+	{
+		if(intTree.data == null)
+			return;
+		double oldAverage = intTree.data.a;
+		double num = intTree.data.b;
+		double mult = num/(num+toAdd);
+		double newAverage = score/num;
+		score = (oldAverage + newAverage) * mult;
+		intTree.data = new Pair(score,num+toAdd);
 	}
 
 	/**
@@ -46,19 +59,23 @@ public class SimpleLearningMonteCarloAgent extends SimpleMonteCarloAgent
 	@Override
 	protected double getScore(BoardState state)
 	{
-		StoredGameTreeInternal<Pair<Double,Integer>> intTree = getIntTree(state);
+		StoredGameTreeInternal<Pair<Double,Double>> intTree = getIntTree(state);
 		if(intTree == null)
 			return super.getScore(state);
 		double average = super.getScore(state);
 		if(intTree.data == null)
-			intTree.data = new Pair(average, 1);
+			intTree.data = new Pair(average, (double)1);
 		else
 		{
-			double oldAverage = intTree.data.a;
-			int num = intTree.data.b;
-			double mult = (double)num/(num+1);
-			double newAverage = average/num;
-			average = (oldAverage + newAverage) * mult;
+			addScore(intTree, average, 1);
+			double l = Configuration.lambda;
+			intTree = intTree.parent;
+			while(l > 0.1 && intTree != null)
+			{
+				addScore(intTree,average * l, l);
+				l *= Configuration.lambda;
+				intTree = intTree.parent;
+			}
 		}
 		return average;
 	}
@@ -79,7 +96,7 @@ public class SimpleLearningMonteCarloAgent extends SimpleMonteCarloAgent
 		if(moves.size() == 1) return moves.get(0);
 		double bestScore = agentPlayer == Player.PLAYER1 ? Integer.MIN_VALUE : Integer.MAX_VALUE;
 		Action a = null;
-		StoredGameTreeInternal<Pair<Double,Integer>> intTree = getIntTree(board);
+		StoredGameTreeInternal<Pair<Double,Double>> intTree = getIntTree(board);
 		for(Action act : moves)
 		{
 			if(intTree != null && intTree.depth < Configuration.maxSLMCTreeDepth)
@@ -105,7 +122,7 @@ public class SimpleLearningMonteCarloAgent extends SimpleMonteCarloAgent
 
 	private File getFile(BoardState state)
 	{
-		String fn = Configuration.fileLoc + "slmc."+state.size + "." + state.numC + ".ser";
+		String fn = Configuration.fileLoc + "slmc."+state.size + "." + state.numC +"." + Configuration.useScore + ".ser";
 		return new File(fn);
 	}
 
@@ -113,6 +130,10 @@ public class SimpleLearningMonteCarloAgent extends SimpleMonteCarloAgent
 	public void informOfState(BoardState board)
 	{
 		super.informOfState(board);
+		if(dataTree != null && board.equals(dataTree.startingBoardState))
+			return;
+		if(dataTree != null)
+			save();
 		File f = getFile(board);
 		if(f.exists())
 		{
@@ -121,7 +142,7 @@ public class SimpleLearningMonteCarloAgent extends SimpleMonteCarloAgent
 			{
 				fis = new FileInputStream(f);
 				ObjectInputStream ois = new ObjectInputStream(fis);
-				dataTree = (StoredGameTree<Pair<Double,Integer>>)ois.readObject();
+				dataTree = (StoredGameTree<Pair<Double,Double>>)ois.readObject();
 				return;
 			}
 			catch(Exception e){}
@@ -139,9 +160,9 @@ public class SimpleLearningMonteCarloAgent extends SimpleMonteCarloAgent
 	}
 
 	@Override
-	public void finishGame()
+	public void save()
 	{
-		super.finishGame();
+		super.save();
 		if(dataTree != null)
 		{
 			File f = getFile(dataTree.startingBoardState);

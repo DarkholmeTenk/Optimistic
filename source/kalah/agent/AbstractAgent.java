@@ -81,4 +81,12 @@ public abstract class AbstractAgent
 	{
 
 	}
+
+	/**
+	 * Called at program close
+	 */
+	public void save()
+	{
+
+	}
 }

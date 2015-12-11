@@ -28,12 +28,12 @@ public class BoardState implements Serializable
 	public final int									size;
 	public final int									numC;
 	private final Player								currentPlayer;
-	private transient final SoftReference<BoardState>[]	futureStates;
+	private transient SoftReference<BoardState>[]	futureStates;
 	private transient final WeakReference<BoardState>	parent;
 
 	/**
 	 * Initialize a new Board
-	 * 
+	 *
 	 * @param _size
 	 *            the number of houses each player has (excluding store)
 	 * @param _counters
@@ -82,6 +82,8 @@ public class BoardState implements Serializable
 	 */
 	public BoardState takeAction(Action a)
 	{
+		if (Configuration.cacheBoardStates && futureStates == null)
+			futureStates = new SoftReference[size];
 		if (a instanceof SwapAction)
 		{
 			if (isValidToSwap())
@@ -295,7 +297,7 @@ public class BoardState implements Serializable
 
 	/**
 	 * Null does not indicate no parent, it may just be that the parent has been garbage collected. Use hasParent to check if a parent should exist This should only be used if this and its parent are known to be strongly referenced.
-	 * 
+	 *
 	 * @return parent if it exists, null if not.
 	 */
 	public BoardState getParent()

@@ -18,8 +18,8 @@ public class StoredGameTreeInternal<D extends Serializable> implements Serializa
 
 	private transient List<Action> acts;
 	protected boolean inited = false;
-	protected StoredGameTreeInternal<D> parent;
-	protected StoredGameTree<D> owned;
+	public final StoredGameTreeInternal<D> parent;
+	public final StoredGameTree<D> owned;
 
 	public StoredGameTreeInternal(BoardState cState, StoredGameTreeInternal<D> pt, StoredGameTree<D> ow)
 	{
