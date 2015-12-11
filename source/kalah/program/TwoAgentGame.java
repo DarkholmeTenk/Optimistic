@@ -52,6 +52,8 @@ public class TwoAgentGame
 	public int play()
 	{
 		if(state == null) return 0;
+		agentOne.informOfState(state);
+		agentTwo.informOfState(state);
 		Action a = null;
 		do
 		{
@@ -63,6 +65,8 @@ public class TwoAgentGame
 			state = state.takeAction(a);
 		}
 		while(a != null);
+		agentOne.finishGame();
+		agentTwo.finishGame();
 		return state.getScore(Player.PLAYER1) - state.getScore(Player.PLAYER2);
 	}
 
