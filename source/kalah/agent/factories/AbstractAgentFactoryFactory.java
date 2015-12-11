@@ -35,6 +35,7 @@ public class AbstractAgentFactoryFactory
 	{
 		register(new RandomAgentFactory());
 		register(new SimpleMonteCarloAgentFactory());
+		register(new SimpleLearningMonteCarloAgentFactory());
 	}
 
 	/**

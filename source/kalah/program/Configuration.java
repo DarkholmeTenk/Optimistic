@@ -9,4 +9,6 @@ public class Configuration
 	public static boolean cacheBoardStates = true;
 	public static int numCallables = 4;
 	public static int numGames = 20;
+	public static int maxSLMCTreeDepth = 100;
+	public static String fileLoc = "";
 }
