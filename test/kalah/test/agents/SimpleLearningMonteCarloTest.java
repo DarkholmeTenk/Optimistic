@@ -12,7 +12,7 @@ import org.junit.Test;
 
 public class SimpleLearningMonteCarloTest extends AgentTest
 {
-	private int runs = 200;
+	private int runs = 50;
 
 	private AbstractAgent p1;
 	private AbstractAgent p2;
