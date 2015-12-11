@@ -1,5 +1,6 @@
 package kalah.game.board;
 
+import java.io.Serializable;
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import kalah.exceptions.InvalidSwapException;
 import kalah.exceptions.WrongPlayerException;
 import kalah.program.Configuration;
 
-public class BoardState
+public class BoardState implements Serializable
 {
 	private static int[] initialBoard(int size, int counters)
 	{
@@ -22,17 +23,20 @@ public class BoardState
 		return tempBoard;
 	}
 
-	private final int							turnNumber;
-	private final int[]							board;
-	public	final int							size;
-	private final Player						currentPlayer;
-	private final SoftReference<BoardState>[]	futureStates;
-	private final WeakReference<BoardState>		parent;
+	private final int									turnNumber;
+	private final int[]									board;
+	public final int									size;
+	private final Player								currentPlayer;
+	private transient final SoftReference<BoardState>[]	futureStates;
+	private transient final WeakReference<BoardState>	parent;
 
 	/**
 	 * Initialize a new Board
-	 * @param _size the number of houses each player has (excluding store)
-	 * @param _counters the number of counters which are in each house to start off with
+	 * 
+	 * @param _size
+	 *            the number of houses each player has (excluding store)
+	 * @param _counters
+	 *            the number of counters which are in each house to start off with
 	 */
 	public BoardState(int _size, int _counters)
 	{
@@ -52,7 +56,7 @@ public class BoardState
 		else
 			futureStates = null;
 		currentPlayer = c;
-		if(_parent == null)
+		if (_parent == null)
 			parent = null;
 		else
 			parent = new WeakReference<BoardState>(_parent);
@@ -73,9 +77,9 @@ public class BoardState
 	 */
 	public BoardState takeAction(Action a)
 	{
-		if(a instanceof SwapAction)
+		if (a instanceof SwapAction)
 		{
-			if(isValidToSwap())
+			if (isValidToSwap())
 				return switchPlayers();
 			throw new InvalidSwapException(turnNumber, size);
 		}
@@ -97,7 +101,7 @@ public class BoardState
 		for (int i = 1; i <= board.length; i++)
 		{
 			int pos = (initialPos + i) % board.length;
-			if(pos == enemyStorePos)
+			if (pos == enemyStorePos)
 				continue;
 			if (howManyGetOne-- > 0)
 				newBoard[pos] += addToAll + 1;
@@ -167,8 +171,10 @@ public class BoardState
 	}
 
 	/**
-	 * @param p the player the house belongs to
-	 * @param house the house to check the counters of (houses are left->right from player's view)
+	 * @param p
+	 *            the player the house belongs to
+	 * @param house
+	 *            the house to check the counters of (houses are left->right from player's view)
 	 * @return the number of counters in the house
 	 */
 	public int getCounters(Player p, int house)
@@ -196,7 +202,7 @@ public class BoardState
 	{
 		int o = getOffset(p);
 		int sum = 0;
-		for(int i = o; i <= o+size; i++)
+		for (int i = o; i <= o + size; i++)
 			sum += board[i];
 		return sum;
 	}
@@ -209,10 +215,10 @@ public class BoardState
 	public BoardState switchPlayers()
 	{
 		Player o = currentPlayer.getOpponent();
-		//int[] newBoard = board.clone();
+		// int[] newBoard = board.clone();
 		int[] newBoard = new int[board.length];
 		for (int i = 0; i < board.length; i++)
-			newBoard[i] = board[(i+board.length / 2) % board.length];
+			newBoard[i] = board[(i + board.length / 2) % board.length];
 		return new BoardState(o, size, newBoard, this);
 	}
 
@@ -225,7 +231,7 @@ public class BoardState
 		for (int i = 0; i < size; i++)
 			if (getCounters(currentPlayer, i) > 0)
 				validActions.add(Action.get(currentPlayer, i));
-		if(isValidToSwap())
+		if (isValidToSwap())
 			validActions.add(Action.swapAction);
 		return validActions;
 	}
@@ -263,15 +269,15 @@ public class BoardState
 	private String toString(Player p)
 	{
 		String s = p.toString() + "- S:" + getCountersInStore(p) + "	:";
-		for(int i = 0; i < size; i++)
-			s += String.format("%2d ", getCounters(p,i));
+		for (int i = 0; i < size; i++)
+			s += String.format("%2d ", getCounters(p, i));
 		return s;
 	}
 
 	@Override
 	public String toString()
 	{
-		return String.format("%s%n%s%n%s","Player turn: " + currentPlayer,toString(Player.PLAYER1),toString(Player.PLAYER2));
+		return String.format("%s%n%s%n%s", "Player turn: " + currentPlayer, toString(Player.PLAYER1), toString(Player.PLAYER2));
 	}
 
 	/**
@@ -283,14 +289,14 @@ public class BoardState
 	}
 
 	/**
-	 * Null does not indicate no parent, it may just be that the parent has been garbage collected.
-	 * Use hasParent to check if a parent should exist
-	 * This should only be used if this and its parent are known to be strongly referenced.
+	 * Null does not indicate no parent, it may just be that the parent has been garbage collected. Use hasParent to check if a parent should exist This should only be used if this and its parent are known to be strongly referenced.
+	 * 
 	 * @return parent if it exists, null if not.
 	 */
 	public BoardState getParent()
 	{
-		if(parent == null) return null;
+		if (parent == null)
+			return null;
 		return parent.get();
 	}
 }
