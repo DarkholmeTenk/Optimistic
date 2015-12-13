@@ -68,7 +68,7 @@ public class MessageFactoryTest{
 	 assertEquals(EngineMessageFactory.getMessage("CHANGE;MOVE;0,8,8,8,8,8,8,1,7,7,7,7,7,7,7,0;YOU\n"), new MoveMessage());
   }
   @Test(expected = InvalidChangeTypeException.class)
-  public static void ChangeTestMove(){
+  public static void ChangeTestException(){
 	 EngineMessageFactory.getMessage("CHNGE;MOE;\n");
   }
 }
