@@ -61,11 +61,11 @@ public class MessageFactoryTest{
   
   @Test
   public static void ChangeTestSwap(){
-	 asserEquals(EnigneMessageFactory.getMessage("CHNGE;SWAP;\n"), new SwapMessage());
+	 asserEquals(EnigneMessageFactory.getMessage("CHANGE;SWAP;7,7,7,7,7,7,7,0,7,7,7,7,7,7,7,0;YOU\n;"), new SwapMessage());
   }
   @Test
   public static void ChangeTestMove(){
-	 asserEquals(EnigneMessageFactory.getMessage("CHNGE;MOVE;\n"), new MoveMessage());
+	 asserEquals(EnigneMessageFactory.getMessage("CHANGE;MOVE;0,8,8,8,8,8,8,1,7,7,7,7,7,7,7,0;YOU\n"), new MoveMessage());
   }
   @Test(expected = InvalidChangeTypeException.class)
   public static void ChangeTestMove(){
