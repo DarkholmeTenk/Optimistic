@@ -1,8 +1,10 @@
 package kalah.engine;
 
 import kalah.agent.AbstractAgent;
-import kalah.agent.factories.*;
-import kalah.game.board.*;
+import kalah.agent.factories.AbstractAgentFactory;
+import kalah.game.board.Action;
+import kalah.game.board.BoardState;
+import kalah.game.board.Player;
 
 public abstract class GameDriver
 {
