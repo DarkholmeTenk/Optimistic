@@ -39,16 +39,19 @@ public class SimpleLearningMonteCarloAgent extends SimpleMonteCarloAgent
 		return dataTree.getInternalTree(state);
 	}
 
-	private void addScore(StoredGameTreeInternal<Pair<Double,Double>> intTree, double score, double toAdd)
+	private Pair<Double,Double> addScore(StoredGameTreeInternal<Pair<Double,Double>> intTree, double score, double toAdd)
 	{
 		if(intTree.data == null)
-			return;
-		double oldAverage = intTree.data.a;
+			return null;
+		/*double oldAverage = intTree.data.a;
 		double num = intTree.data.b;
 		double mult = num/(num+toAdd);
 		double newAverage = score/num;
-		score = (oldAverage + newAverage) * mult;
+		score = (oldAverage + newAverage) * mult;*/
+		score += intTree.data.a;
+		double num = intTree.data.b;
 		intTree.data = new Pair(score,num+toAdd);
+		return intTree.data;
 	}
 
 	/**
@@ -63,12 +66,16 @@ public class SimpleLearningMonteCarloAgent extends SimpleMonteCarloAgent
 		if(intTree == null)
 			return super.getScore(state);
 		double average = super.getScore(state);
+		double score = average;
+		double num = 1;
 		if(intTree.data == null)
-			intTree.data = new Pair(average, (double)1);
+			intTree.data = new Pair(average, num);
 		else
 		{
 			addScore(intTree, average, 1);
 			double l = Configuration.lambda;
+			score = intTree.data.a;
+			num = intTree.data.b;
 			intTree = intTree.parent;
 			while(l > 0.1 && intTree != null)
 			{
@@ -77,7 +84,7 @@ public class SimpleLearningMonteCarloAgent extends SimpleMonteCarloAgent
 				intTree = intTree.parent;
 			}
 		}
-		return average;
+		return average / num;
 	}
 
 	private boolean isBetter(double score, double oldBest)

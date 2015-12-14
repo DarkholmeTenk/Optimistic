@@ -11,6 +11,6 @@ public class Configuration
 	public static int numGames = 20;
 	public static int maxSLMCTreeDepth = 100;
 	public static String fileLoc = "";
-	public static boolean useScore = true;
+	public static boolean useScore = false;
 	public static double lambda = 0.85;
 }
