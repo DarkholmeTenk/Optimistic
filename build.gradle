@@ -30,7 +30,7 @@ if (JavaVersion.current().isJava8Compatible()) {
 	}
 }
 
-targetCompatability = 1.7
+targetCompatibility = 1.7
 
 jar {
 	manifest {
