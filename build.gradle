@@ -30,6 +30,12 @@ if (JavaVersion.current().isJava8Compatible()) {
 	}
 }
 
+jar {
+	manifest {
+		attributes 'Main-Class': 'kalah.program.Optimism'
+	}
+}
+
 task myJavadocs(type: Javadoc) {
 	source = sourceSets.main.allJava
 	failOnError = false
