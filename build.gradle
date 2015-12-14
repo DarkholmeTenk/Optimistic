@@ -30,6 +30,10 @@ if (JavaVersion.current().isJava8Compatible()) {
 	}
 }
 
+compileJava {
+	targetCompatability = 1.7
+}
+
 jar {
 	manifest {
 		attributes 'Main-Class': 'kalah.program.Optimism'
