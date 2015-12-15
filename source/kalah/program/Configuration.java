@@ -28,16 +28,17 @@ public class Configuration
 			if(a.startsWith("-"))
 			{
 				String b = null;
-				if(i < (args.length - 1))
+				if(i < args.length - 1)
 				{
 					String ns = args[i+1];
-					if(!(ns.startsWith("-")))
+					if(!ns.startsWith("-"))
 					{
 						b = ns;
 						i++;
 					}
 				}
-				handleArg(a, b);
+				if(!handleArg(a, b) && b != null)
+					remaining.add(b);
 			}
 			else
 				remaining.add(a);
@@ -49,11 +50,15 @@ public class Configuration
 	{
 		try
 		{
-			Integer.parseInt(s);
+			return Integer.parseInt(s);
 		}
 		catch(NumberFormatException e)
 		{
 			System.err.println(s + " is not a number, using " + defaultInt + " instead");
+		}
+		catch(NullPointerException e)
+		{
+			System.err.println("Err received, using " + defaultInt + " instead");
 		}
 		return defaultInt;
 	}
@@ -62,30 +67,40 @@ public class Configuration
 	{
 		try
 		{
-			Double.parseDouble(s);
+			return Double.parseDouble(s);
 		}
 		catch(NumberFormatException e)
 		{
 			System.err.println(s + " is not a number, using " + defaultDouble + " instead");
 		}
+		catch(NullPointerException e)
+		{
+			System.err.println("Err received, using " + defaultDouble + " instead");
+		}
 		return defaultDouble;
 	}
 
-	public static void handleArg(String arg, String val)
+	/**
+	 * @param arg the name of the argument
+	 * @param val the value the argument takes
+	 * @return true if the val argument is consumed, false if not
+	 */
+	public static boolean handleArg(String arg, String val)
 	{
 		if(arg.length() > 2)
 			arg = arg.toLowerCase();
 		switch(arg)
 		{
-		case "-c": case "--numcallables": numCallables = toInt(val,4); break;
-		case "-C": case "--nocache": cacheBoardStates = false; break;
-		case "-g": case "--numgames": numGames = toInt(val, 20); break;
-		case "-M": case "--maxtreedepth": maxSLMCTreeDepth = toInt(val,100); break;
-		case "-f": case "--fileloc": fileLoc = val!=null?val:""; break;
-		case "-s": case "--usescores": useScore=true; break;
-		case "-l": case "--lambda": lambda=toDouble(val,0.85); break;
-		case "-b": case "--boardsize": boardSize=toInt(val,7); break;
-		case "-B": case "--boardcounters": boardC=toInt(val,7); break;
+			case "-c": case "--numcallables": numCallables = toInt(val,4); break;
+			case "-C": case "--nocache": cacheBoardStates = false; return false;
+			case "-g": case "--numgames": numGames = toInt(val, 20); break;
+			case "-M": case "--maxtreedepth": maxSLMCTreeDepth = toInt(val,100); break;
+			case "-f": case "--fileloc": fileLoc = val!=null?val:""; break;
+			case "-s": case "--usescores": useScore=true; return false;
+			case "-l": case "--lambda": lambda=toDouble(val,0.85); break;
+			case "-b": case "--boardsize": boardSize=toInt(val,7); break;
+			case "-B": case "--boardcounters": boardC=toInt(val,7); break;
 		}
+		return true;
 	}
 }
