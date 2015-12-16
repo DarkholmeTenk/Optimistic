@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import kalah.engine.Listener;
 import kalah.engine.message.engine.*;
+import kalah.game.board.Position;
 
 public class ListenerTest {
   @Test
@@ -27,14 +28,18 @@ public class ListenerTest {
   @Test
   public void testNextSequence() {
     String sequence =
-      "CHANGE;4;9,8,1,9,8,8,8,1,8,1,8,0,9,9,9,2;YOU\n" +
-      "CHANGE;1;10,9,1,0,9,9,9,2,0,3,10,2,11,10,10,3;YOU\n" +
-      "CHANGE;7;11,10,2,1,10,1,11,3,2,5,12,3,12,11,0,4;YOU\n";
+        "START;North\n" +
+        "CHANGE;2;8,7,7,7,7,7,7,0,7,7,7,7,7,7,7,0;YOU\n" +
+        "CHANGE;4;9,8,1,9,8,8,8,1,8,1,8,0,9,9,9,2;YOU\n" +
+        "CHANGE;1;10,9,1,0,9,9,9,2,0,3,10,2,11,10,10,3;YOU\n" +
+        "CHANGE;7;11,10,2,1,10,1,11,3,2,5,12,3,12,11,0,4;YOU\n";
 
     InputStream stream = new ByteArrayInputStream(sequence.getBytes());
     Listener listener = new Listener(stream);
 
     try {
+      assertEquals(((StartMessage) listener.next()).getPosition(), Position.North);
+      assertEquals(((MoveMessage) listener.next()).getHouse(), 1);
       assertEquals(((MoveMessage) listener.next()).getHouse(), 3);
       assertEquals(((MoveMessage) listener.next()).getHouse(), 0);
       assertEquals(((MoveMessage) listener.next()).getHouse(), 6);
