@@ -34,7 +34,7 @@ public class ExternalGameDriver extends GameDriver
     EngineMessage message = listener.next();
 
     if(message instanceof StartMessage)
-      if(((StartMessage) message).getPosition() == Position.North)
+      if(((StartMessage) message).getPosition() == Position.South)
         return Player.PLAYER1;
       else
         return Player.PLAYER2;
