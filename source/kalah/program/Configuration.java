@@ -1,5 +1,8 @@
 package kalah.program;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -18,6 +21,31 @@ public class Configuration
 
 	public static int boardSize = 7;
 	public static int boardC = 7;
+	public static boolean verbose = false;
+
+	static PrintStream log;
+
+	static
+	{
+		try
+		{
+			Runtime.getRuntime().addShutdownHook(new ShutdownThread());
+			FileOutputStream f = new FileOutputStream("output."+System.currentTimeMillis()+".log");
+			log = new PrintStream(f);
+			System.setErr(log);
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public static void log(String message)
+	{
+		if(log == null) return; //Log failed to open
+		if(verbose)
+			log.println(message);
+	}
 
 	public static List<String> readArgs(String... args)
 	{
@@ -100,6 +128,7 @@ public class Configuration
 			case "-l": case "--lambda": lambda=toDouble(val,0.85); break;
 			case "-b": case "--boardsize": boardSize=toInt(val,7); break;
 			case "-B": case "--boardcounters": boardC=toInt(val,7); break;
+			case "-v": case "--verbose": verbose = true; return false;
 		}
 		return true;
 	}

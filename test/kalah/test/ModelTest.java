@@ -37,6 +37,7 @@ public class ModelTest
 			}
 			catch(RuntimeException e)
 			{
+				e.printStackTrace();
 			}
 		}
 	}
