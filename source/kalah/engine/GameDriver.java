@@ -25,8 +25,8 @@ public abstract class GameDriver
 		}
 		else
 		{
-			playerTwo = factoryTwo.getAgent(Player.PLAYER1);
-			playerOne = factoryOne.getAgent(Player.PLAYER2);
+			playerTwo = factoryOne.getAgent(Player.PLAYER2);
+			playerOne = factoryTwo.getAgent(Player.PLAYER1);
 		}
 
 		this.board = board;

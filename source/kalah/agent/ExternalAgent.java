@@ -52,7 +52,7 @@ public class ExternalAgent extends AbstractAgent
     }
     catch (IOException e)
     {
-      return null;
+      throw new RuntimeException("Listener broke! " + e);
     }
   }
 
