@@ -43,7 +43,7 @@ public class Action
 
   public String toString()
   {
-    return player + " - " + (house + 1);
+    return "MOVE " + (house + 1) + ", " + player;
   }
 
 	/*

@@ -14,6 +14,6 @@ public enum Player
 
   public String toString()
   {
-    return (this == PLAYER1 ? "Player 1 (South)" : "Player 2 (North)");
+    return (this == PLAYER1 ? "South/1" : "North/2");
   }
 }
