@@ -26,7 +26,7 @@ public class MessageFactoryTest{
   public void StartTestNorth(){
 	  // START; North|South \n
 	  StartMessage test;
-	  test = (StartMessage) EngineMessageFactory.getMessage("START;North\n");
+	  test = (StartMessage) EngineMessageFactory.getMessage("START;North");
 	  // test that position is North
 	  assertEquals(test.getPosition(),Position.North);
   }
@@ -34,7 +34,7 @@ public class MessageFactoryTest{
   public void StartTestSouth(){
 	  // START; North|South \n
 	  StartMessage test;
-	  test = (StartMessage) EngineMessageFactory.getMessage("START;South\n");
+	  test = (StartMessage) EngineMessageFactory.getMessage("START;South");
 	  // test that position is South
 	  assertEquals(test.getPosition(),Position.South);
   }
@@ -43,32 +43,32 @@ public class MessageFactoryTest{
 	  // START; North|South \n
 	  StartMessage test;
 	  // test that Messages is invalid and throws exception
-		  test = (StartMessage) EngineMessageFactory.getMessage("START;north\n");
+		  test = (StartMessage) EngineMessageFactory.getMessage("START;north");
   }
 
   @Test
   public void EndTest(){
 	  // END\n
 	  // test that a game overmessage has been recieved
-	  assertEquals(EngineMessageFactory.getMessage("END\n"), new GameOverMessage());
+	  assertEquals(EngineMessageFactory.getMessage("END"), new GameOverMessage());
   }
   @Test(expected = InvalidMessageNameException.class)
   public void EndTestException(){
 	  // END\n
 	  // test that a exception is thorm from invalid Message EN
-	  assertEquals(EngineMessageFactory.getMessage("EN\n"), new GameOverMessage());
+	  assertEquals(EngineMessageFactory.getMessage("EN"), new GameOverMessage());
   }
 
   @Test
   public void ChangeTestSwap(){
-	 assertEquals(EngineMessageFactory.getMessage("CHANGE;SWAP;7,7,7,7,7,7,7,0,7,7,7,7,7,7,7,0;YOU\n;"), new SwapMessage());
+	 assertEquals(EngineMessageFactory.getMessage("CHANGE;SWAP;7,7,7,7,7,7,7,0,7,7,7,7,7,7,7,0;YOU"), new SwapMessage());
   }
   @Test
   public void ChangeTestMove(){
-	 assertEquals(((MoveMessage) EngineMessageFactory.getMessage("CHANGE;1;0,8,8,8,8,8,8,1,7,7,7,7,7,7,7,0;YOU\n")).getHouse(), 0);
+	 assertEquals(((MoveMessage) EngineMessageFactory.getMessage("CHANGE;1;0,8,8,8,8,8,8,1,7,7,7,7,7,7,7,0;YOU")).getHouse(), 0);
   }
   @Test(expected = InvalidChangeTypeException.class)
   public void ChangeTestException(){
-	 EngineMessageFactory.getMessage("CHNGE;MOE;\n");
+	 EngineMessageFactory.getMessage("CHNGE;MOE;");
   }
 }
