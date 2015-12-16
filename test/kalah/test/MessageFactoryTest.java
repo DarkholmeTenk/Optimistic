@@ -69,6 +69,6 @@ public class MessageFactoryTest{
   }
   @Test(expected = InvalidChangeTypeException.class)
   public void ChangeTestException(){
-	 EngineMessageFactory.getMessage("CHNGE;MOE;");
+	 EngineMessageFactory.getMessage("CHANGE;MOE;");
   }
 }
