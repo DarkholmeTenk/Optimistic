@@ -3,7 +3,7 @@ package kalah.test;
 import static org.junit.Assert.*;
 
 import kalah.engine.message.engine.exceptions.*;
-import kalah.engine.message.engine.EngineMessageFactory;
+import kalah.engine.message.engine.*;
 import kalah.game.board.*;
 
 import kalah.game.board.Position;
@@ -13,7 +13,7 @@ import org.junit.Test;
 
 /**
 *  set of tests to make sure the GIU ( listerner and speaker) are accepting the correct
-*  values and returning the right messages when being called. assunming a Listener is 
+*  values and returning the right messages when being called. assunming a Listener is
 *  the one supplying the messages correctly
 *  START
 *  CHANGE
@@ -21,54 +21,54 @@ import org.junit.Test;
 */
 
 public class MessageFactoryTest{
-    
+
   @Test
-  public static void StartTestNorth(){
+  public void StartTestNorth(){
 	  // START; North|South \n
 	  StartMessage test;
-	  test = EngineMessageFactory.getMessage("START;North\n");
+	  test = (StartMessage) EngineMessageFactory.getMessage("START;North\n");
 	  // test that position is North
 	  assertEquals(test.getPosition(),Position.North);
   }
   @Test
-  public static void StartTestSouth(){
+  public void StartTestSouth(){
 	  // START; North|South \n
 	  StartMessage test;
-	  test = EngineMessageFactory.getMessage("START;South\n");
+	  test = (StartMessage) EngineMessageFactory.getMessage("START;South\n");
 	  // test that position is South
 	  assertEquals(test.getPosition(),Position.South);
   }
   @Test(expected = InvalidPositionException.class)
-  public static void StartTestException(){
+  public void StartTestException(){
 	  // START; North|South \n
 	  StartMessage test;
 	  // test that Messages is invalid and throws exception
-		  test = EngineMessageFactory.getMessage("START;north\n");
+		  test = (StartMessage) EngineMessageFactory.getMessage("START;north\n");
   }
-  
+
   @Test
-  public static void EndTest(){
+  public void EndTest(){
 	  // END\n
 	  // test that a game overmessage has been recieved
 	  assertEquals(EngineMessageFactory.getMessage("END\n"), new GameOverMessage());
   }
   @Test(expected = InvalidMessageNameException.class)
-  public static void EndTestException(){
+  public void EndTestException(){
 	  // END\n
 	  // test that a exception is thorm from invalid Message EN
 	  assertEquals(EngineMessageFactory.getMessage("EN\n"), new GameOverMessage());
   }
-  
+
   @Test
-  public static void ChangeTestSwap(){
+  public void ChangeTestSwap(){
 	 assertEquals(EngineMessageFactory.getMessage("CHANGE;SWAP;7,7,7,7,7,7,7,0,7,7,7,7,7,7,7,0;YOU\n;"), new SwapMessage());
   }
   @Test
-  public static void ChangeTestMove(){
-	 assertEquals(EngineMessageFactory.getMessage("CHANGE;MOVE;0,8,8,8,8,8,8,1,7,7,7,7,7,7,7,0;YOU\n"), new MoveMessage());
+  public void ChangeTestMove(){
+	 assertEquals(((MoveMessage) EngineMessageFactory.getMessage("CHANGE;1;0,8,8,8,8,8,8,1,7,7,7,7,7,7,7,0;YOU\n")).getHouse(), 0);
   }
   @Test(expected = InvalidChangeTypeException.class)
-  public static void ChangeTestException(){
+  public void ChangeTestException(){
 	 EngineMessageFactory.getMessage("CHNGE;MOE;\n");
   }
 }
