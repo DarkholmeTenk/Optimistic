@@ -50,18 +50,18 @@ public class MessageFactoryTest{
   public void EndTest(){
 	  // END\n
 	  // test that a game overmessage has been recieved
-	  assertEquals(EngineMessageFactory.getMessage("END"), new GameOverMessage());
+	  assertTrue(EngineMessageFactory.getMessage("END") instanceof GameOverMessage);
   }
   @Test(expected = InvalidMessageNameException.class)
   public void EndTestException(){
 	  // END\n
 	  // test that a exception is thorm from invalid Message EN
-	  assertEquals(EngineMessageFactory.getMessage("EN"), new GameOverMessage());
+	  assertTrue(EngineMessageFactory.getMessage("EN") instanceof GameOverMessage);
   }
 
   @Test
   public void ChangeTestSwap(){
-	 assertEquals(EngineMessageFactory.getMessage("CHANGE;SWAP;7,7,7,7,7,7,7,0,7,7,7,7,7,7,7,0;YOU"), new SwapMessage());
+	 assertTrue(EngineMessageFactory.getMessage("CHANGE;SWAP;7,7,7,7,7,7,7,0,7,7,7,7,7,7,7,0;YOU") instanceof SwapMessage);
   }
   @Test
   public void ChangeTestMove(){
