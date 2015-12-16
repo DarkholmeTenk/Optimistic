@@ -281,13 +281,13 @@ public class BoardState implements Serializable
 
     if (p == Player.PLAYER1)
     {
-      for (int i = size - 1; i >= 0; i--)
+      for (int i = 0; i < size; i++)
         wells += String.format("%2d  ", getCounters(p, i));
       return wells + "--  " + store + "  :  " + p;
     }
     else
     {
-      for (int i = 0; i < size; i++)
+      for (int i = size - 1; i >= 0; i--)
         wells += String.format("%2d  ", getCounters(p, i));
       return store + "  --  " + wells + ":  " + p;
     }
