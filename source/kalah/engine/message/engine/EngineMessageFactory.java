@@ -11,8 +11,17 @@ public class EngineMessageFactory {
 
   public static EngineMessage getMessage(String input) {
     int indexOfFirstSemicolon = input.indexOf(';');
-    String messageName = input.substring(0, indexOfFirstSemicolon);
-    String messageBody = input.substring(indexOfFirstSemicolon + 1);
+
+    String messageName;
+    String messageBody;
+
+    if (indexOfFirstSemicolon == -1) {
+      messageName = input;
+      messageBody = "";
+    } else {
+      messageName = input.substring(0, indexOfFirstSemicolon);
+      messageBody = input.substring(indexOfFirstSemicolon + 1);
+    }
 
     switch(messageName) {
       case "START": return createStartMessage(messageBody);
@@ -20,8 +29,6 @@ public class EngineMessageFactory {
       case "END": return new GameOverMessage();
       default: throw new InvalidMessageNameException(messageName);
     }
-
-
   }
 
   private static ChangeMessage createChangeMessage(String messageBody) {

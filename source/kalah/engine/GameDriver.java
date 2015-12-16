@@ -30,9 +30,6 @@ public abstract class GameDriver
 		}
 
 		this.board = board;
-
-		playerOne.informOfState(board);
-		playerTwo.informOfState(board);
 	}
 
 	private AbstractAgent getAgent(Player player)
@@ -52,12 +49,11 @@ public abstract class GameDriver
 	{
 		Player active = board.getCurrentPlayerTurn();
 		Player inactive = active.getOpponent();
-		Action action = getAgent(active).takeNextAction();
+		Action action = getAgent(active).getNextMove(board);
 
 		if (action != null)
 		{
 			BoardState newBoard = board.takeAction(action);
-			getAgent(inactive).informOfAction(action);
 			getAgent(inactive).opponentAction(board, action);
 			board = newBoard;
 			return true;
@@ -72,6 +68,7 @@ public abstract class GameDriver
 	public void complete()
 	{
 		while(step());
+
 		playerOne.finishGame();
 		playerTwo.finishGame();
 	}

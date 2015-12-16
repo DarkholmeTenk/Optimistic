@@ -21,7 +21,7 @@ public class ExternalGameDriver extends GameDriver
   {
     super(
         agentFactory,
-        new ExternalAgentFactory(listener),
+        new ExternalAgentFactory(listener, speaker),
         getInternalPlayer(listener),
         new BoardState(7, 7));
 
