@@ -5,6 +5,7 @@ import kalah.agent.factories.AbstractAgentFactory;
 import kalah.game.board.Action;
 import kalah.game.board.BoardState;
 import kalah.game.board.Player;
+import kalah.program.Configuration;
 
 public abstract class GameDriver
 {
@@ -47,12 +48,16 @@ public abstract class GameDriver
 	 */
 	public boolean step()
 	{
+    Configuration.log(board.toString());
+
 		Player active = board.getCurrentPlayerTurn();
 		Player inactive = active.getOpponent();
 		Action action = getAgent(active).getNextMove(board);
 
 		if (action != null)
 		{
+			Configuration.log("Action: " + action.toString());
+
 			BoardState newBoard = board.takeAction(action);
 			getAgent(inactive).opponentAction(board, action);
 			board = newBoard;

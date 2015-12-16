@@ -5,7 +5,6 @@ import kalah.engine.Speaker;
 import kalah.engine.message.engine.*;
 import kalah.engine.message.agent.*;
 import kalah.game.board.*;
-import kalah.program.Configuration;
 
 import java.io.IOException;
 
@@ -26,8 +25,6 @@ public class ExternalAgent extends AbstractAgent
 	{
 		try
 		{
-			Configuration.log(state.toString());
-			Configuration.log("Action: " + action.toString());
 			if(action instanceof SwapAction)
 				speaker.say(new SwapCommandMessage());
 			else

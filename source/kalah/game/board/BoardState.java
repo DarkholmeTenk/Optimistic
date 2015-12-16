@@ -283,20 +283,20 @@ public class BoardState implements Serializable
     {
       for (int i = size - 1; i >= 0; i--)
         wells += String.format("%2d  ", getCounters(p, i));
-      return wells + "--  " + store + player;
+      return wells + "--  " + store + "  :  " + p;
     }
     else
     {
       for (int i = 0; i < size; i++)
         wells += String.format("%2d  ", getCounters(p, i));
-      return store + "  --  " + wells + player;
+      return store + "  --  " + wells + ":  " + p;
     }
 	}
 
 	@Override
 	public String toString()
 	{
-    return String.format("%s%n%s%n%s", toString(Player.PLAYER2), toString(Player.PLAYER1), "Turn: " + (currentPlayer == Player.PLAYER1 ? "South" : "North"));
+    return String.format("%s%n%s%n%s", "Turn: " + currentPlayer, toString(Player.PLAYER2), toString(Player.PLAYER1));
 	}
 
 	/**
