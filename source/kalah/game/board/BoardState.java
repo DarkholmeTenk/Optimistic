@@ -275,16 +275,28 @@ public class BoardState implements Serializable
 
 	private String toString(Player p)
 	{
-		String s = p.toString() + "- S:" + getCountersInStore(p) + "	:";
-		for (int i = 0; i < size; i++)
-			s += String.format("%2d ", getCounters(p, i));
-		return s;
+    String wells = "";
+    String store = String.format("%2d", getCountersInStore(p));
+    String player = " : " + p;
+
+    if (p == Player.PLAYER1)
+    {
+      for (int i = size - 1; i >= 0; i--)
+        wells += String.format("%2d  ", getCounters(p, i));
+      return wells + "--  " + store + player;
+    }
+    else
+    {
+      for (int i = 0; i < size; i++)
+        wells += String.format("%2d  ", getCounters(p, i));
+      return store + "  --  " + wells + player;
+    }
 	}
 
 	@Override
 	public String toString()
 	{
-		return String.format("%s%n%s%n%s", "Player turn: " + currentPlayer, toString(Player.PLAYER1), toString(Player.PLAYER2));
+    return String.format("%s%n%s%n%s", toString(Player.PLAYER2), toString(Player.PLAYER1), "Turn: " + (currentPlayer == Player.PLAYER1 ? "South" : "North"));
 	}
 
 	/**

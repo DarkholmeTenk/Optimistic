@@ -41,6 +41,11 @@ public class Action
 		return true;
 	}
 
+  public String toString()
+  {
+    return player + " - " + house;
+  }
+
 	/*
 	 * Factory methods start here
 	 */
