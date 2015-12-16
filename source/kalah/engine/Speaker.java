@@ -1,8 +1,6 @@
 package kalah.engine;
 
 import kalah.engine.message.agent.AgentMessage;
-import kalah.program.Configuration;
-
 import java.io.*;
 
 /**
@@ -24,7 +22,7 @@ public class Speaker
 	 */
 	public void say(AgentMessage message) throws IOException
 	{
-		Configuration.log("Making move: " + message);
 		output.writeBytes(message.toString());
+		output.flush();
 	}
 }
