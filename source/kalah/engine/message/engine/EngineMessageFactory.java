@@ -2,6 +2,7 @@ package kalah.engine.message.engine;
 
 import kalah.engine.message.engine.exceptions.*;
 import kalah.game.board.*;
+import kalah.engine.message.engine.Turn;
 
 /**
  * Creates EngineMessage objects from a string recieved by the game engine
@@ -35,12 +36,16 @@ public class EngineMessageFactory {
     int indexOfFirstSemicolon = messageBody.indexOf(';');
     String changeType = messageBody.substring(0, indexOfFirstSemicolon);
     String changeBody = messageBody.substring(indexOfFirstSemicolon + 1);
+    String changeTurn =
+        messageBody.substring(messageBody.length() - 3, messageBody.length());
+    Turn turn = changeTurn.equals("END") ? Turn.END :
+        changeTurn.equals("YOU") ? Turn.YOU : Turn.OPP;
 
     if (changeType.equals("SWAP")) {
-      return new SwapMessage();
+      return new SwapMessage(turn);
     } else {
       try {
-        return new MoveMessage(Integer.parseInt(changeType));
+        return new MoveMessage(Integer.parseInt(changeType), turn);
       } catch (NumberFormatException e) {
         throw new InvalidChangeTypeException(changeType);
       }

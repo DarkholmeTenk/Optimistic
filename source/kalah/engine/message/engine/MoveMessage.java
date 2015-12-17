@@ -1,5 +1,7 @@
 package kalah.engine.message.engine;
 
+import kalah.engine.message.engine.Turn;
+
 /**
  * Represents a move message from the game engine.
  *
@@ -10,7 +12,8 @@ public class MoveMessage extends ChangeMessage {
 
   private final int house;
 
-  protected MoveMessage(int move) {
+  protected MoveMessage(int move, Turn turn) {
+    super(turn);
     this.house = move - 1;
   }
 

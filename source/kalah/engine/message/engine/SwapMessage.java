@@ -1,6 +1,6 @@
 package kalah.engine.message.engine;
 
-import kalah.game.board.*;
+import kalah.engine.message.engine.Turn;
 
 /**
  * Represents a swap message from the game engine.
@@ -8,4 +8,8 @@ import kalah.game.board.*;
  * Syntax:
  *   "SWAP"
  */
-public class SwapMessage extends ChangeMessage {}
+public class SwapMessage extends ChangeMessage {
+  protected SwapMessage(Turn turn) {
+    super(turn);
+  }
+}

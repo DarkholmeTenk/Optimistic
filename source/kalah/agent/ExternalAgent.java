@@ -12,12 +12,14 @@ public class ExternalAgent extends AbstractAgent
 {
 	private final Listener listener;
 	private final Speaker speaker;
+  private Turn lastTurn;
 
 	public ExternalAgent(Player player, Listener listener, Speaker speaker)
 	{
 		super(player);
 		this.listener = listener;
 		this.speaker = speaker;
+    this.lastTurn = null;
 	}
 
 	@Override
@@ -42,13 +44,24 @@ public class ExternalAgent extends AbstractAgent
 		try
 		{
 			EngineMessage message = listener.next();
+      while(!(lastTurn == Turn.OPP || lastTurn == null))
+      {
+        if (!(message instanceof ChangeMessage)) return null;
+
+        lastTurn = ((ChangeMessage) message).getTurn();
+        message = listener.next();
+      }
+
+      if (!(message instanceof ChangeMessage)) return null;
+
+      lastTurn = ((ChangeMessage) message).getTurn();
 
 			if(message instanceof MoveMessage)
 				return new Action(agentPlayer, ((MoveMessage) message).getHouse());
 			else if (message instanceof SwapMessage)
 				return new SwapAction();
-			else
-				return null;
+      else
+        return null;
 		}
 		catch (IOException e)
 		{
