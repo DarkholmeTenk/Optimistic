@@ -85,16 +85,19 @@ public class ModelTest
 	{
 		BoardState oldState = new BoardState(Player.PLAYER1, 4, new int[]{3,1,2,0, 0, 4,3,2,1, 0}, null);
 		BoardState newState = oldState.takeAction(Action.get(Player.PLAYER1, 0));
-		assertSame("P1 House not empty", newState.getCounters(Player.PLAYER1, 3), 0);
-		assertSame("P2 House not empty", newState.getCounters(Player.PLAYER2, 0), 0);
+		assertSame("P1 House not empty\n" + newState, newState.getCounters(Player.PLAYER1, 3), 0);
+		assertSame("P2 House not empty\n" + newState, newState.getCounters(Player.PLAYER2, 0), 0);
 		assertSame("P1 Score wrong", newState.getCountersInStore(Player.PLAYER1), 5);
 	}
 
 	@Test
 	public void captureTestNew()
 	{
-		BoardState state = new BoardState(Player.PLAYER1, 7, new int[]{4,1,0,2,16,5,1, 9, 13,11,3,1,3,12,3, 4}, null);
+		BoardState state = new BoardState(Player.PLAYER1, 7, new int[]{3,0,14,1,15,14,0, 8, 12,10,2,0,2,11,2, 4}, null);
 		BoardState newState = state.takeAction(Action.get(Player.PLAYER1,2));
+		assertSame("P2 house not empty\n" + newState, newState.getCounters(Player.PLAYER2, 5), 0);
+		assertSame("P1 house not empty\n" + newState, newState.getCounters(Player.PLAYER1, 1), 0);
+		assertSame("P1 has wrong score\n" + newState, newState.getCountersInStore(Player.PLAYER1), 22);
 	}
 
 }
