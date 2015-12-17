@@ -90,4 +90,11 @@ public class ModelTest
 		assertSame("P1 Score wrong", newState.getCountersInStore(Player.PLAYER1), 5);
 	}
 
+	@Test
+	public void captureTestNew()
+	{
+		BoardState state = new BoardState(Player.PLAYER1, 7, new int[]{4,1,0,2,16,5,1, 9, 13,11,3,1,3,12,3, 4}, null);
+		BoardState newState = state.takeAction(Action.get(Player.PLAYER1,2));
+	}
+
 }
