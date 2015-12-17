@@ -116,7 +116,7 @@ public class BoardState implements Serializable
 				newBoard[pos] += addToAll;
 		}
 
-		int endPos = (initialPos + inHouse) % board.length; // Where do we end up
+		int endPos = (initialPos + inHouse) % (board.length - 1); // Where do we end up
 		int endHouse = endPos % (size + 1); // End house (independant of player)
 		Player whoseSide = getPlayer(endPos);
 		Player next = p.getOpponent();
@@ -125,7 +125,7 @@ public class BoardState implements Serializable
 			if (whoseSide == currentPlayer) // and it's ours
 				next = p; // well it's still our go then
 		}
-		else if (board[endPos] == 0 && whoseSide == currentPlayer) // Place we ended up was empty and ours
+		else if (newBoard[endPos] == 1 && whoseSide == currentPlayer) // Place we ended up was empty and ours
 		{
 			int oppositePos = getOppositeHouse(endPos);
 			if (board[oppositePos] != 0) // and the opponents opposite is not empty
@@ -275,28 +275,28 @@ public class BoardState implements Serializable
 
 	private String toString(Player p)
 	{
-    String wells = "";
-    String store = String.format("%2d", getCountersInStore(p));
-    String player = " : " + p;
+		String wells = "";
+		String store = String.format("%2d", getCountersInStore(p));
+		String player = " : " + p;
 
-    if (p == Player.PLAYER1)
-    {
-      for (int i = 0; i < size; i++)
-        wells += String.format("%2d  ", getCounters(p, i));
-      return wells + "--  " + store + "  :  " + p;
-    }
-    else
-    {
-      for (int i = size - 1; i >= 0; i--)
-        wells += String.format("%2d  ", getCounters(p, i));
-      return store + "  --  " + wells + ":  " + p;
-    }
+		if (p == Player.PLAYER1)
+		{
+			for (int i = 0; i < size; i++)
+				wells += String.format("%2d  ", getCounters(p, i));
+			return wells + "--  " + store + "  :  " + p;
+		}
+		else
+		{
+			for (int i = size - 1; i >= 0; i--)
+				wells += String.format("%2d  ", getCounters(p, i));
+			return store + "  --  " + wells + ":  " + p;
+		}
 	}
 
 	@Override
 	public String toString()
 	{
-    return String.format("%s%n%s%n%s", "Turn: " + currentPlayer, toString(Player.PLAYER2), toString(Player.PLAYER1));
+		return String.format("%s%n%s%n%s", "Turn: " + currentPlayer, toString(Player.PLAYER2), toString(Player.PLAYER1));
 	}
 
 	/**
