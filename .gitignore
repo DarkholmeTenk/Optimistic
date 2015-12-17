@@ -3,6 +3,8 @@
 *.classpath
 *.project
 *.ser
+*.log
+*~
 
 # Directories
 .gradle/*
