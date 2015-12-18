@@ -134,7 +134,7 @@ public class BoardState implements Serializable
 		else if (newBoard[endPos] == 1 && whoseSide2 == currentPlayer) // Place we ended up was empty and ours
 		{
 			int oppositePos = getOppositeHouse(endPos);
-			if (board[oppositePos] != 0) // and the opponents opposite is not empty
+			if (newBoard[oppositePos] != 0) // and the opponents opposite is not empty
 			{
 				newBoard[getStorePos(currentPlayer)] += newBoard[endPos] + newBoard[oppositePos]; // move all the counters to our store
 				newBoard[endPos] = 0;

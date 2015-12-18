@@ -126,4 +126,13 @@ public class ModelTest
 		assertTrue("capture occured",bs.getCounters(Player.PLAYER2, 0) == 1);
 	}
 
+	@Test
+	public void capTest3()
+	{
+		new BoardState(7,7); //Instantiate actions
+		BoardState bs = new BoardState(Player.PLAYER2, 7, new int[]{0,4,4,12,3,5,0 ,6, 0,18,0,12,12,10,10, 2},null);
+		bs = bs.takeAction(Action.get(Player.PLAYER2, 3));
+		assertTrue("capture occured",bs.getCounters(Player.PLAYER1, 6) == 0);
+	}
+
 }
