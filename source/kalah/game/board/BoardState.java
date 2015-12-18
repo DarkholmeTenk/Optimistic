@@ -129,7 +129,8 @@ public class BoardState implements Serializable
 		if (endHouse == size) // We're in a store
 		{
 			if (whoseSide == currentPlayer) // and it's ours
-				next = p; // well it's still our go then
+        if (turnNumber > 0) // And it's not the first turn (pie rule)
+				    next = p; // well it's still our go then
 		}
 		else if (newBoard[endPos] == 1 && whoseSide2 == currentPlayer) // Place we ended up was empty and ours
 		{
