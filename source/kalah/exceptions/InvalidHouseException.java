@@ -1,4 +1,4 @@
-package kalah.game.exceptions;
+package kalah.exceptions;
 
 public class InvalidHouseException extends RuntimeException
 {

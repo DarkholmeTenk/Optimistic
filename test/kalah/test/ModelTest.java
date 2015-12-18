@@ -1,7 +1,6 @@
 package kalah.test;
 
 import static org.junit.Assert.*;
-
 import kalah.game.board.Action;
 import kalah.game.board.BoardState;
 import kalah.game.board.Player;
@@ -37,6 +36,7 @@ public class ModelTest
 			}
 			catch(RuntimeException e)
 			{
+				e.printStackTrace();
 			}
 		}
 	}
@@ -84,9 +84,28 @@ public class ModelTest
 	{
 		BoardState oldState = new BoardState(Player.PLAYER1, 4, new int[]{3,1,2,0, 0, 4,3,2,1, 0}, null);
 		BoardState newState = oldState.takeAction(Action.get(Player.PLAYER1, 0));
-		assertSame("P1 House not empty", newState.getCounters(Player.PLAYER1, 3), 0);
-		assertSame("P2 House not empty", newState.getCounters(Player.PLAYER2, 0), 0);
+		assertSame("P1 House not empty\n" + newState, newState.getCounters(Player.PLAYER1, 3), 0);
+		assertSame("P2 House not empty\n" + newState, newState.getCounters(Player.PLAYER2, 0), 0);
 		assertSame("P1 Score wrong", newState.getCountersInStore(Player.PLAYER1), 5);
+	}
+
+	@Test
+	public void captureTestNew()
+	{
+		BoardState state = new BoardState(Player.PLAYER1, 7, new int[]{3,0,14,1,15,14,0, 8, 12,10,2,0,2,11,2, 4}, null);
+		BoardState newState = state.takeAction(Action.get(Player.PLAYER1,2));
+		assertSame("P2 house not empty\n" + newState, newState.getCounters(Player.PLAYER2, 5), 0);
+		assertSame("P1 house not empty\n" + newState, newState.getCounters(Player.PLAYER1, 1), 0);
+		assertSame("P1 has wrong score\n" + newState, newState.getCountersInStore(Player.PLAYER1), 22);
+	}
+
+	@Test
+	public void p2FreezeTest()
+	{
+		new BoardState(7,7); //Instantiate actions
+		BoardState bs = new BoardState(Player.PLAYER2, 7, new int[]{0,0,0,0,0,0,1, 82, 1,0,0,0,4,0,1, 9},null);
+		BoardState ns = bs.takeAction(Action.get(Player.PLAYER2, 6));
+		assertTrue("Wrong player turn",ns.getCurrentPlayerTurn()==Player.PLAYER2);
 	}
 
 }

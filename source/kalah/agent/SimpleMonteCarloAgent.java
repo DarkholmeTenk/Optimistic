@@ -17,7 +17,7 @@ public class SimpleMonteCarloAgent extends AbstractAgent
 
 	private List<TwoAgentGameCallable> callables = new ArrayList<TwoAgentGameCallable>();
 
-	private SimpleMonteCarloAgent(Player player)
+	protected SimpleMonteCarloAgent(Player player)
 	{
 		super(player);
 		for(int i = 0; i < Configuration.numCallables; i++)
@@ -29,7 +29,7 @@ public class SimpleMonteCarloAgent extends AbstractAgent
 	 * @param state
 	 * @return
 	 */
-	private double getScore(BoardState state)
+	protected double getScore(BoardState state)
 	{
 		double average = 0;
 		synchronized(callables)

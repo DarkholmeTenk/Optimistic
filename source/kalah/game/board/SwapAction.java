@@ -6,4 +6,9 @@ public class SwapAction extends Action
 	{
 		super(Player.PLAYER2, -1);
 	}
+
+  public String toString()
+  {
+    return "SWAP, " + player;
+  }
 }

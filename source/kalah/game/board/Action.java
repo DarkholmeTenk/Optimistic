@@ -13,7 +13,7 @@ public class Action
 
 	public final static Action swapAction = new SwapAction();
 
-	protected Action(Player p, int h)
+	public Action(Player p, int h)
 	{
 		player = p;
 		house = h;
@@ -40,6 +40,11 @@ public class Action
 		if (player != other.player) return false;
 		return true;
 	}
+
+  public String toString()
+  {
+    return "MOVE " + (house + 1) + ", " + player;
+  }
 
 	/*
 	 * Factory methods start here

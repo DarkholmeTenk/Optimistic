@@ -6,7 +6,7 @@ import kalah.game.board.BoardState;
 import kalah.game.board.Player;
 
 /**
- * A class for running 
+ * A class for running
  * @author dark
  *
  */
@@ -52,6 +52,8 @@ public class TwoAgentGame
 	public int play()
 	{
 		if(state == null) return 0;
+		agentOne.informOfState(state);
+		agentTwo.informOfState(state);
 		Action a = null;
 		do
 		{
@@ -63,7 +65,15 @@ public class TwoAgentGame
 			state = state.takeAction(a);
 		}
 		while(a != null);
-		return state.getScore(Player.PLAYER1) - state.getScore(Player.PLAYER2);
+		agentOne.finishGame();
+		agentTwo.finishGame();
+		if(Configuration.useScore)
+			return state.getScore(Player.PLAYER1) - state.getScore(Player.PLAYER2);
+		int p1S = state.getScore(Player.PLAYER1);
+		int p2S = state.getScore(Player.PLAYER2);
+		if(p1S > p2S) return 1;
+		if(p1S < p2S) return -1;
+		return 0;
 	}
 
 	public int play(BoardState _state)

@@ -1,6 +1,6 @@
 package kalah.engine.message.engine;
 
-import kalah.game.board.*;
+import kalah.engine.message.engine.Turn;
 
 /**
  * Represents a change message from the game engine.
@@ -12,4 +12,14 @@ import kalah.game.board.*;
  *     <NAT> ::= "0" | "1" | "2" | ... | k
  *     <TURN> ::= "YOU" | "OPP" | "END"
  */
-public abstract class ChangeMessage implements EngineMessage {}
+public abstract class ChangeMessage implements EngineMessage {
+  private final Turn turn;
+
+  protected ChangeMessage(Turn turn) {
+    this.turn = turn;
+  }
+
+  public Turn getTurn() {
+    return turn;
+  }
+}

@@ -7,6 +7,10 @@ import kalah.game.board.Action;
 import kalah.game.board.BoardState;
 import kalah.game.board.Player;
 
+/**
+ * An agent which makes random decisions
+ *
+ */
 public class RandomAgent extends AbstractAgent
 {
 	public static final RandomAgent playerOne = new RandomAgent(Player.PLAYER1);
