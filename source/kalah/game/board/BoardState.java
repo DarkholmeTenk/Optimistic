@@ -153,7 +153,7 @@ public class BoardState implements Serializable
 	 */
 	private Player getPlayer(int position)
 	{
-		return position <= size + 1 ? Player.PLAYER1 : Player.PLAYER2;
+		return position <= size ? Player.PLAYER1 : Player.PLAYER2;
 	}
 
 	/**

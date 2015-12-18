@@ -117,4 +117,13 @@ public class ModelTest
 		assertTrue("Wrong player turn",bs.getCurrentPlayerTurn() == Player.PLAYER1);
 	}
 
+	@Test
+	public void noCapTest()
+	{
+		new BoardState(7,7); //Instantiate actions
+		BoardState bs = new BoardState(Player.PLAYER1, 7, new int[]{2,2,1,0,1,0,2, 68, 0,0,0,0,0,13,1, 8},null);
+		bs = bs.takeAction(Action.get(Player.PLAYER1, 6));
+		assertTrue("capture occured",bs.getCounters(Player.PLAYER2, 0) == 1);
+	}
+
 }
