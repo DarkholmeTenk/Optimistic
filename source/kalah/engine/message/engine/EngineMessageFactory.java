@@ -24,12 +24,10 @@ public class EngineMessageFactory {
       messageBody = input.substring(indexOfFirstSemicolon + 1);
     }
 
-    switch(messageName) {
-      case "START": return createStartMessage(messageBody);
-      case "CHANGE": return createChangeMessage(messageBody);
-      case "END": return new GameOverMessage();
-      default: throw new InvalidMessageNameException(messageName);
-    }
+    if      (messageName.equals("START")) return createStartMessage(messageBody);
+    else if (messageName.equals("CHANGE")) return createChangeMessage(messageBody);
+    else if (messageName.equals("END")) return new GameOverMessage();
+    else throw new InvalidMessageNameException(messageName);
   }
 
   private static ChangeMessage createChangeMessage(String messageBody) {
@@ -55,11 +53,9 @@ public class EngineMessageFactory {
   private static StartMessage createStartMessage(String messageBody) {
     String position = messageBody;
 
-    switch (position) {
-      case "North": return new StartMessage(Position.North);
-      case "South": return new StartMessage(Position.South);
-      default: throw new InvalidPositionException(position);
-    }
+    if      (position.equals("North")) return new StartMessage(Position.North);
+    else if (position.equals("South")) return new StartMessage(Position.South);
+    else throw new InvalidPositionException(position);
   }
 
 }

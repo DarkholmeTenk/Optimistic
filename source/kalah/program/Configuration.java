@@ -118,19 +118,18 @@ public class Configuration
 	{
 		if(arg.length() > 2)
 			arg = arg.toLowerCase();
-		switch(arg)
-		{
-			case "-c": case "--numcallables": numCallables = toInt(val,4); break;
-			case "-C": case "--nocache": cacheBoardStates = false; return false;
-			case "-g": case "--numgames": numGames = toInt(val, 20); break;
-			case "-M": case "--maxtreedepth": maxSLMCTreeDepth = toInt(val,100); break;
-			case "-f": case "--fileloc": fileLoc = val!=null?val:""; break;
-			case "-s": case "--usescores": useScore=true; return false;
-			case "-l": case "--lambda": lambda=toDouble(val,0.85); break;
-			case "-b": case "--boardsize": boardSize=toInt(val,7); break;
-			case "-B": case "--boardcounters": boardC=toInt(val,7); break;
-			case "-v": case "--verbose": verbose = true; return false;
-		}
+
+    if      (arg.equals("-c") || arg.equals("--numcallables")) { numCallables = toInt(val,4); }
+    else if (arg.equals("-C") || arg.equals("--numcallables")) { cacheBoardStates = false; return false; }
+    else if (arg.equals("-g") || arg.equals("--numcallables")) { numGames = toInt(val, 20); }
+    else if (arg.equals("-M") || arg.equals("--numcallables")) { maxSLMCTreeDepth = toInt(val,100); }
+    else if (arg.equals("-f") || arg.equals("--numcallables")) { fileLoc = val!=null?val:""; }
+    else if (arg.equals("-s") || arg.equals("--numcallables")) { useScore=true; return false; }
+    else if (arg.equals("-l") || arg.equals("--numcallables")) { lambda=toDouble(val,0.85); }
+    else if (arg.equals("-b") || arg.equals("--numcallables")) { boardSize=toInt(val,7); }
+    else if (arg.equals("-B") || arg.equals("--numcallables")) { boardC=toInt(val,7); }
+    else if (arg.equals("-v") || arg.equals("--numcallables")) { verbose = true; return false; }
+
 		return true;
 	}
 }
