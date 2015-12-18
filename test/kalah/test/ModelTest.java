@@ -108,4 +108,13 @@ public class ModelTest
 		assertTrue("Wrong player turn",ns.getCurrentPlayerTurn()==Player.PLAYER2);
 	}
 
+	@Test
+	public void p2FreezeTest2()
+	{
+		new BoardState(7,7); //Instantiate actions
+		BoardState bs = new BoardState(Player.PLAYER1, 7, new int[]{3,5,1,1,2,17,15, 11, 1,5,15,3,2,5,14, 5},null);
+		bs = bs.takeAction(Action.get(Player.PLAYER1, 5));
+		assertTrue("Wrong player turn",bs.getCurrentPlayerTurn() == Player.PLAYER1);
+	}
+
 }

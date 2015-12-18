@@ -105,21 +105,25 @@ public class BoardState implements Serializable
 		int howManyGetOne = inHouse % (board.length - 1);
 		int enemyStorePos = getStorePos(p.getOpponent());
 		newBoard[initialPos] = 0;
+		int endPos = initialPos;
 		for (int i = 1; i <= board.length; i++)
 		{
 			int pos = (initialPos + i) % board.length;
 			if (pos == enemyStorePos)
 				continue;
 			if (howManyGetOne-- > 0)
+			{
 				newBoard[pos] += addToAll + 1;
+				endPos = pos;
+			}
 			else
 				newBoard[pos] += addToAll;
 		}
 
-		int endPos = initialPos + inHouse; // Where do we end up
+		//int endPos = initialPos + inHouse; // Where do we end up
 		int endHouse = endPos % (size + 1); // End house (independant of player)
 		Player whoseSide = getPlayer(endPos);
-		endPos = endPos % (board.length - 1);
+		//endPos = endPos % (board.length - 1);
 		Player whoseSide2= getPlayer(endPos);
 		Player next = p.getOpponent();
 		if (endHouse == size) // We're in a store
