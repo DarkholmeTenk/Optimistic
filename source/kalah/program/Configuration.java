@@ -27,17 +27,18 @@ public class Configuration
 
 	static
 	{
-		try
-		{
-			Runtime.getRuntime().addShutdownHook(new ShutdownThread());
-			FileOutputStream f = new FileOutputStream("output."+System.currentTimeMillis()+".log");
-			log = new PrintStream(f);
-			System.setErr(log);
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
+		// try
+		// {
+		// 	Runtime.getRuntime().addShutdownHook(new ShutdownThread());
+		// 	FileOutputStream f = new FileOutputStream("output."+System.currentTimeMillis()+".log");
+		// 	log = new PrintStream(f);
+		// 	System.setErr(log);
+		// }
+		// catch(IOException e)
+		// {
+		// 	e.printStackTrace();
+		// }
+    log = null;
 	}
 
 	public static void log(String message)
