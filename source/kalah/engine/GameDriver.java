@@ -48,7 +48,7 @@ public abstract class GameDriver
 	 */
 	public boolean step()
 	{
-    Configuration.log(board.toString());
+		Configuration.log(board.toString());
 
 		Player active = board.getCurrentPlayerTurn();
 		Player inactive = active.getOpponent();
@@ -73,7 +73,7 @@ public abstract class GameDriver
 	public void complete()
 	{
 		while(step());
-
+		Configuration.log("Game over \n" + board);
 		playerOne.finishGame();
 		playerTwo.finishGame();
 	}
