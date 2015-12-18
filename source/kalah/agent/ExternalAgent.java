@@ -30,10 +30,13 @@ public class ExternalAgent extends AbstractAgent
 			if(action instanceof SwapAction)
 				speaker.say(new SwapCommandMessage());
 			else
+      {
 				speaker.say(new MoveCommandMessage(action));
 
-      // Eat the message about the move we just made
-      listener.next();
+        // Eat the message about the move we just made
+        listener.next();
+      }
+
 		}
 		catch (IOException e)
 		{
@@ -47,7 +50,7 @@ public class ExternalAgent extends AbstractAgent
 		try
 		{
       EngineMessage message = listener.next();
-      
+
 			if(message instanceof MoveMessage)
 				return new Action(agentPlayer, ((MoveMessage) message).getHouse());
 			else if (message instanceof SwapMessage)
