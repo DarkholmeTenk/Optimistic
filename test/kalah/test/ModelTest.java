@@ -1,7 +1,6 @@
 package kalah.test;
 
 import static org.junit.Assert.*;
-
 import kalah.game.board.Action;
 import kalah.game.board.BoardState;
 import kalah.game.board.Player;
@@ -98,6 +97,15 @@ public class ModelTest
 		assertSame("P2 house not empty\n" + newState, newState.getCounters(Player.PLAYER2, 5), 0);
 		assertSame("P1 house not empty\n" + newState, newState.getCounters(Player.PLAYER1, 1), 0);
 		assertSame("P1 has wrong score\n" + newState, newState.getCountersInStore(Player.PLAYER1), 22);
+	}
+
+	@Test
+	public void p2FreezeTest()
+	{
+		new BoardState(7,7); //Instantiate actions
+		BoardState bs = new BoardState(Player.PLAYER2, 7, new int[]{0,0,0,0,0,0,1, 82, 1,0,0,0,4,0,1, 9},null);
+		BoardState ns = bs.takeAction(Action.get(Player.PLAYER2, 6));
+		assertTrue("Wrong player turn",ns.getCurrentPlayerTurn()==Player.PLAYER2);
 	}
 
 }

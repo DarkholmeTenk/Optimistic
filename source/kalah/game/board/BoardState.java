@@ -116,16 +116,18 @@ public class BoardState implements Serializable
 				newBoard[pos] += addToAll;
 		}
 
-		int endPos = (initialPos + inHouse) % (board.length - 1); // Where do we end up
+		int endPos = initialPos + inHouse; // Where do we end up
 		int endHouse = endPos % (size + 1); // End house (independant of player)
 		Player whoseSide = getPlayer(endPos);
+		endPos = endPos % (board.length - 1);
+		Player whoseSide2= getPlayer(endPos);
 		Player next = p.getOpponent();
 		if (endHouse == size) // We're in a store
 		{
 			if (whoseSide == currentPlayer) // and it's ours
 				next = p; // well it's still our go then
 		}
-		else if (newBoard[endPos] == 1 && whoseSide == currentPlayer) // Place we ended up was empty and ours
+		else if (newBoard[endPos] == 1 && whoseSide2 == currentPlayer) // Place we ended up was empty and ours
 		{
 			int oppositePos = getOppositeHouse(endPos);
 			if (board[oppositePos] != 0) // and the opponents opposite is not empty
